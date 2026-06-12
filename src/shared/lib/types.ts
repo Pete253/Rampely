@@ -12,5 +12,7 @@ export type Pipeline = Tables<"pipelines">;
 export type PipelineStage = Tables<"pipeline_stages">;
 export type Deal = Tables<"deals">;
 export type Activity = Tables<"activities">;
+export type Booking = Tables<"bookings">;
 
 export type AppRole = Database["public"]["Enums"]["app_role"];
+export type BookingOutcome = Database["public"]["Enums"]["booking_outcome"];

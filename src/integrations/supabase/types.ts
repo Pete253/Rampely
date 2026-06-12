@@ -76,6 +76,70 @@ export type Database = {
           },
         ];
       };
+      bookings: {
+        Row: {
+          booked_by: string;
+          contact_id: string;
+          created_at: string;
+          deal_id: string | null;
+          held_at: string;
+          id: string;
+          notes: string | null;
+          outcome: Database["public"]["Enums"]["booking_outcome"] | null;
+          quality_score: number | null;
+          updated_at: string;
+          workspace_id: string;
+        };
+        Insert: {
+          booked_by: string;
+          contact_id: string;
+          created_at?: string;
+          deal_id?: string | null;
+          held_at: string;
+          id?: string;
+          notes?: string | null;
+          outcome?: Database["public"]["Enums"]["booking_outcome"] | null;
+          quality_score?: number | null;
+          updated_at?: string;
+          workspace_id: string;
+        };
+        Update: {
+          booked_by?: string;
+          contact_id?: string;
+          created_at?: string;
+          deal_id?: string | null;
+          held_at?: string;
+          id?: string;
+          notes?: string | null;
+          outcome?: Database["public"]["Enums"]["booking_outcome"] | null;
+          quality_score?: number | null;
+          updated_at?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "bookings_contact_id_fkey";
+            columns: ["contact_id"];
+            isOneToOne: false;
+            referencedRelation: "contacts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_deal_id_fkey";
+            columns: ["deal_id"];
+            isOneToOne: false;
+            referencedRelation: "deals";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: false;
+            referencedRelation: "workspaces";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       calendar_events: {
         Row: {
           color: string | null;
@@ -863,6 +927,7 @@ export type Database = {
     Enums: {
       activity_type: "call" | "email" | "meeting" | "note" | "task";
       app_role: "owner" | "admin" | "member";
+      booking_outcome: "held" | "no_show" | "cancelled";
       deal_status: "open" | "won" | "lost";
       event_type: "meeting" | "call" | "other";
       stage_type: "open" | "won" | "lost";
@@ -995,6 +1060,7 @@ export const Constants = {
     Enums: {
       activity_type: ["call", "email", "meeting", "note", "task"],
       app_role: ["owner", "admin", "member"],
+      booking_outcome: ["held", "no_show", "cancelled"],
       deal_status: ["open", "won", "lost"],
       event_type: ["meeting", "call", "other"],
       stage_type: ["open", "won", "lost"],

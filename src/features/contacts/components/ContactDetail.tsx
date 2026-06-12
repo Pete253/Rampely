@@ -24,6 +24,7 @@ import { ContactForm } from "./ContactForm";
 import { ActivityTimeline } from "@/shared/components/activity/ActivityTimeline";
 import { Breadcrumbs } from "@/shared/components/Breadcrumbs";
 import { EntityTasksTab } from "@/features/calendar/components/EntityTasksTab";
+import { EntityBookingsTab } from "@/features/bookings/components/EntityBookingsTab";
 import { formatDKK } from "@/features/pipeline/lib/pipeline-utils";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/shared/lib/supabase";
@@ -176,6 +177,7 @@ export function ContactDetail({ id }: { id: string }) {
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="deals">Deals</TabsTrigger>
             <TabsTrigger value="tasks">Tasks</TabsTrigger>
+            <TabsTrigger value="bookings">Bookings</TabsTrigger>
             <TabsTrigger value="activity">Activity</TabsTrigger>
           </TabsList>
           <TabsContent value="overview">
@@ -193,6 +195,9 @@ export function ContactDetail({ id }: { id: string }) {
           </TabsContent>
           <TabsContent value="tasks">
             <EntityTasksTab contactId={id} />
+          </TabsContent>
+          <TabsContent value="bookings">
+            <EntityBookingsTab contactId={id} />
           </TabsContent>
           <TabsContent value="activity">
             <ActivityTimeline contactId={id} />

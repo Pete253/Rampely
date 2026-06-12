@@ -15,6 +15,7 @@ import { DealContactsCard } from "./DealContactsCard";
 import { DealDetailsCard } from "./DealDetailsCard";
 import { DealStageHistory } from "./DealStageHistory";
 import { EntityTasksTab } from "@/features/calendar/components/EntityTasksTab";
+import { EntityBookingsTab } from "@/features/bookings/components/EntityBookingsTab";
 
 interface Props {
   dealId: string;
@@ -90,6 +91,7 @@ export function DealDetail({ dealId }: Props) {
                 <TabsTrigger value="activity">Activity</TabsTrigger>
                 <TabsTrigger value="notes">Notes</TabsTrigger>
                 <TabsTrigger value="tasks">Tasks</TabsTrigger>
+                <TabsTrigger value="bookings">Bookings</TabsTrigger>
                 <TabsTrigger value="files">Files</TabsTrigger>
               </TabsList>
               <TabsContent value="activity" className="mt-4">
@@ -100,6 +102,9 @@ export function DealDetail({ dealId }: Props) {
               </TabsContent>
               <TabsContent value="tasks" className="mt-4">
                 <EntityTasksTab dealId={deal.id} />
+              </TabsContent>
+              <TabsContent value="bookings" className="mt-4">
+                <EntityBookingsTab dealId={deal.id} defaultContactId={deal.contact_id} />
               </TabsContent>
               <TabsContent value="files" className="mt-4">
                 <PlaceholderTab text="File attachments coming soon." />
