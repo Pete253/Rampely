@@ -29,10 +29,7 @@ function SettingsPage() {
   async function handleSave() {
     if (!workspace || !country) return;
     setSaving(true);
-    const { error } = await supabase
-      .from("workspaces")
-      .update({ country })
-      .eq("id", workspace.id);
+    const { error } = await supabase.from("workspaces").update({ country }).eq("id", workspace.id);
     setSaving(false);
     if (error) {
       toast.error(error.message);
@@ -47,7 +44,7 @@ function SettingsPage() {
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Settings</h1>
+        <h1 className="text-2xl font-extrabold tracking-[-0.03em]">Settings</h1>
         <p className="text-sm text-muted-foreground">Manage your workspace preferences.</p>
       </div>
 
@@ -61,24 +58,24 @@ function SettingsPage() {
         </TabsContent>
         <TabsContent value="country">
           <Card>
-        <CardHeader>
-          <CardTitle>Country &amp; Region</CardTitle>
-          <CardDescription>
-            Changing country affects which local integrations are available. Your existing data is
-            not modified.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="workspace-country">Workspace country</Label>
-            <CountrySelect id="workspace-country" value={country} onChange={setCountry} />
-          </div>
-          <div className="flex justify-end">
-            <Button onClick={handleSave} disabled={!dirty || !country || saving}>
-              {saving ? "Saving…" : "Save"}
-            </Button>
-          </div>
-        </CardContent>
+            <CardHeader>
+              <CardTitle>Country &amp; Region</CardTitle>
+              <CardDescription>
+                Changing country affects which local integrations are available. Your existing data
+                is not modified.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="workspace-country">Workspace country</Label>
+                <CountrySelect id="workspace-country" value={country} onChange={setCountry} />
+              </div>
+              <div className="flex justify-end">
+                <Button onClick={handleSave} disabled={!dirty || !country || saving}>
+                  {saving ? "Saving…" : "Save"}
+                </Button>
+              </div>
+            </CardContent>
           </Card>
         </TabsContent>
       </Tabs>

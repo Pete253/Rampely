@@ -5,10 +5,7 @@ import { AppLayout } from "@/shared/components/AppLayout";
 import { PendingCreateProvider } from "@/shared/contexts/PendingCreateContext";
 import { CommandPaletteProvider } from "@/shared/components/search/use-command-palette";
 import { CommandPalette } from "@/shared/components/search/CommandPalette";
-import {
-  ShortcutsHelpProvider,
-  useKeyboardShortcuts,
-} from "@/shared/hooks/useKeyboardShortcuts";
+import { ShortcutsHelpProvider, useKeyboardShortcuts } from "@/shared/hooks/useKeyboardShortcuts";
 import { KeyboardShortcutsHelp } from "@/shared/components/KeyboardShortcutsHelp";
 import { CountryOnboardingDialog } from "@/shared/components/onboarding/CountryOnboardingDialog";
 import { useWorkspace } from "@/shared/hooks/useWorkspace";
@@ -35,14 +32,23 @@ function AuthenticatedLayout() {
   const location = useLocation();
 
   useEffect(() => {
-    if (!loading && !session) navigate({ to: "/login", search: { invite_token: undefined, email: undefined }, replace: true });
+    if (!loading && !session)
+      navigate({
+        to: "/login",
+        search: { invite_token: undefined, email: undefined },
+        replace: true,
+      });
   }, [loading, session, navigate]);
 
   useEffect(() => {
     if (loading || !session || workspacesLoading) return;
     if (workspaces.length === 0 && location.pathname !== "/welcome") {
       let pendingToken: string | null = null;
-      try { pendingToken = sessionStorage.getItem("pending_invite_token"); } catch {}
+      try {
+        pendingToken = sessionStorage.getItem("pending_invite_token");
+      } catch {
+        // sessionStorage can be unavailable (private mode) — non-fatal
+      }
       if (pendingToken) {
         navigate({ to: "/invite/$token", params: { token: pendingToken }, replace: true });
       } else {

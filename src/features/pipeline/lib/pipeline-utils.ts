@@ -38,15 +38,16 @@ export function closeDateColor(date: string | null | undefined): CloseDateColor 
   return "green";
 }
 
+// Rampely design-system palette: blue scale plus semantic accents.
 export const STAGE_COLOR_PRESETS = [
-  "#64748b", // slate
-  "#3b82f6", // blue
-  "#8b5cf6", // violet
-  "#ec4899", // pink
-  "#f59e0b", // amber
-  "#10b981", // emerald
-  "#ef4444", // red
-  "#14b8a6", // teal
+  "#8B99F0", // blue-5
+  "#6B7FFF", // blue-3
+  "#4759E8", // blue-1 (primary)
+  "#2D3AB0", // blue-2
+  "#C7CFF3", // primary light
+  "#FEBC2E", // warning
+  "#28C840", // success
+  "#FF5F57", // danger
 ] as const;
 
 export const DEFAULT_STAGES: Array<{
@@ -55,10 +56,10 @@ export const DEFAULT_STAGES: Array<{
   probability: number;
   stage_type: "open" | "won" | "lost";
 }> = [
-  { name: "Lead", color: "#64748b", probability: 10, stage_type: "open" },
-  { name: "Qualified", color: "#3b82f6", probability: 25, stage_type: "open" },
-  { name: "Proposal", color: "#8b5cf6", probability: 50, stage_type: "open" },
-  { name: "Negotiation", color: "#f59e0b", probability: 75, stage_type: "open" },
-  { name: "Won", color: "#10b981", probability: 100, stage_type: "won" },
-  { name: "Lost", color: "#ef4444", probability: 0, stage_type: "lost" },
+  { name: "Lead", color: "#8B99F0", probability: 10, stage_type: "open" },
+  { name: "Qualified", color: "#6B7FFF", probability: 25, stage_type: "open" },
+  { name: "Proposal", color: "#4759E8", probability: 50, stage_type: "open" },
+  { name: "Negotiation", color: "#FEBC2E", probability: 75, stage_type: "open" },
+  { name: "Won", color: "#28C840", probability: 100, stage_type: "won" },
+  { name: "Lost", color: "#FF5F57", probability: 0, stage_type: "lost" },
 ];

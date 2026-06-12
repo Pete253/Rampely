@@ -42,7 +42,7 @@ export function EventCard({ event, style, onClick, size = "md" }: Props) {
       tabIndex={0}
       className={cn(
         "absolute left-1 right-1 cursor-grab active:cursor-grabbing select-none touch-none",
-        "overflow-hidden rounded border shadow-sm",
+        "overflow-hidden rounded border",
         size === "sm" ? "px-1.5 py-1 text-[11px]" : "px-2 py-1 text-xs",
         resolveEventColor(event),
       )}

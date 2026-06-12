@@ -14,7 +14,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { useDealsCreatedVsClosed } from "../hooks/useDealsCreatedVsClosed";
-import { chartTheme, tooltipStyle } from "../lib/chart-config";
+import { chartTheme, tooltipCursor, tooltipStyle } from "../lib/chart-config";
 
 interface Props {
   from: Date;
@@ -60,10 +60,16 @@ export function DealsCreatedVsClosedChart({ from, to }: Props) {
               />
               <Tooltip
                 contentStyle={tooltipStyle}
+                cursor={tooltipCursor}
                 labelFormatter={(d) => format(new Date(d as string), "dd MMM yyyy")}
               />
               <Legend wrapperStyle={{ fontSize: 11 }} />
-              <Bar dataKey="created_count" name="Created" fill={chartTheme.created} radius={[3, 3, 0, 0]} />
+              <Bar
+                dataKey="created_count"
+                name="Created"
+                fill={chartTheme.created}
+                radius={[3, 3, 0, 0]}
+              />
               <Bar dataKey="won_count" name="Won" fill={chartTheme.won} radius={[3, 3, 0, 0]} />
               <Bar dataKey="lost_count" name="Lost" fill={chartTheme.lost} radius={[3, 3, 0, 0]} />
             </BarChart>

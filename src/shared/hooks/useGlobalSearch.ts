@@ -119,9 +119,7 @@ export function useGlobalSearch(query: string) {
       return (data ?? []).map((t) => ({
         id: t.id,
         label: t.title,
-        secondary: t.due_at
-          ? `Due ${new Date(t.due_at).toLocaleDateString()}`
-          : t.status,
+        secondary: t.due_at ? `Due ${new Date(t.due_at).toLocaleDateString()}` : t.status,
       }));
     },
   });
@@ -135,9 +133,7 @@ export function useGlobalSearch(query: string) {
         .from("calendar_events")
         .select("id, title, description, location, start_at")
         .eq("workspace_id", workspaceId!)
-        .or(
-          `title.ilike.${ilike},description.ilike.${ilike},location.ilike.${ilike}`,
-        )
+        .or(`title.ilike.${ilike},description.ilike.${ilike},location.ilike.${ilike}`)
         .limit(20);
       if (error) throw error;
       return (data ?? []).map((e) => ({
@@ -163,9 +159,7 @@ export function useGlobalSearch(query: string) {
       return (data ?? []).map((a) => ({
         id: a.id,
         label: a.subject ?? a.type,
-        secondary: a.created_at
-          ? new Date(a.created_at).toLocaleDateString()
-          : a.type,
+        secondary: a.created_at ? new Date(a.created_at).toLocaleDateString() : a.type,
       }));
     },
   });

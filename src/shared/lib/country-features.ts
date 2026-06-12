@@ -263,9 +263,7 @@ export const COUNTRY_ORDER: CountryCode[] = [
   "OTHER",
 ];
 
-export function getCountryFeatures(
-  code: CountryCode | string | null | undefined,
-): CountryFeatures {
+export function getCountryFeatures(code: CountryCode | string | null | undefined): CountryFeatures {
   if (!code || !(code in COUNTRY_FEATURES)) return COUNTRY_FEATURES.OTHER;
   return COUNTRY_FEATURES[code as CountryCode];
 }

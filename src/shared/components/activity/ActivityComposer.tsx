@@ -61,10 +61,7 @@ export function ActivityComposer({ onCreate }: Props) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-3 rounded-lg border bg-card p-4 shadow-sm"
-    >
+    <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border bg-card p-4">
       <div className="flex flex-wrap gap-1.5">
         {ACTIVITY_TYPES.map((t) => {
           const meta = ACTIVITY_TYPE_META[t];

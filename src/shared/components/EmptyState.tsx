@@ -10,11 +10,13 @@ interface Props {
 
 export function EmptyState({ icon: Icon, title, description, action }: Props) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
-      <Icon className="mb-4 h-12 w-12 text-muted-foreground" strokeWidth={1.5} />
-      <h3 className="text-base font-medium">{title}</h3>
+    <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-white/12 p-12 text-center">
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/12">
+        <Icon className="h-6 w-6 text-primary-light" strokeWidth={1.75} />
+      </div>
+      <h3 className="text-base font-extrabold tracking-[-0.02em]">{title}</h3>
       {description && (
-        <p className="mt-1 max-w-sm text-sm text-muted-foreground">{description}</p>
+        <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">{description}</p>
       )}
       {action && (
         <Button onClick={action.onClick} className="mt-4">

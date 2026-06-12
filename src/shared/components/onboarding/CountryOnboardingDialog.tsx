@@ -51,9 +51,7 @@ export function CountryOnboardingDialog() {
       >
         <DialogHeader>
           <DialogTitle>Welcome to Rampely</DialogTitle>
-          <DialogDescription>
-            Which country does your team primarily operate in?
-          </DialogDescription>
+          <DialogDescription>Which country does your team primarily operate in?</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-2">

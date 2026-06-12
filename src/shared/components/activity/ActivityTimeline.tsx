@@ -12,14 +12,12 @@ interface Props {
   showComposer?: boolean;
 }
 
-export function ActivityTimeline({
-  contactId,
-  companyId,
-  dealId,
-  showComposer = true,
-}: Props) {
-  const { activities, loading, hasMore, loadMore, create, update, remove } =
-    useActivities({ contactId, companyId, dealId });
+export function ActivityTimeline({ contactId, companyId, dealId, showComposer = true }: Props) {
+  const { activities, loading, hasMore, loadMore, create, update, remove } = useActivities({
+    contactId,
+    companyId,
+    dealId,
+  });
 
   return (
     <div className="space-y-4">
@@ -39,12 +37,7 @@ export function ActivityTimeline({
       ) : (
         <div className="space-y-3">
           {activities.map((a) => (
-            <ActivityItem
-              key={a.id}
-              activity={a}
-              onUpdate={update}
-              onDelete={remove}
-            />
+            <ActivityItem key={a.id} activity={a} onUpdate={update} onDelete={remove} />
           ))}
           {hasMore && (
             <div className="flex justify-center pt-2">

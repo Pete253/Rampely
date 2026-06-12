@@ -6,11 +6,7 @@ import {
   closestCenter,
   type DragEndEvent,
 } from "@dnd-kit/core";
-import {
-  SortableContext,
-  arrayMove,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { TaskRow } from "./TaskRow";
 import type { TaskRecord, TaskStatus } from "../hooks/useTasks";
 
@@ -29,9 +25,7 @@ export function TasksList({
   onReorder,
   reorderEnabled = false,
 }: Props) {
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
 
   if (tasks.length === 0) {
     return (
@@ -56,16 +50,10 @@ export function TasksList({
   return (
     <>
       {!reorderEnabled && (
-        <p className="text-xs text-muted-foreground px-1">
-          Clear filters to reorder
-        </p>
+        <p className="text-xs text-muted-foreground px-1">Clear filters to reorder</p>
       )}
       <div className="rounded-md border bg-card">
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
           <SortableContext items={ids} strategy={verticalListSortingStrategy}>
             {tasks.map((t) => (
               <TaskRow

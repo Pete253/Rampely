@@ -72,12 +72,7 @@ export function TaskForm({ initial, onSubmit, onCancel, submitLabel = "Create ta
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-1.5">
         <Label htmlFor="task-title">Title</Label>
-        <Input
-          id="task-title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          autoFocus
-        />
+        <Input id="task-title" value={title} onChange={(e) => setTitle(e.target.value)} autoFocus />
       </div>
 
       <div className="space-y-1.5">

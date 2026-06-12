@@ -19,10 +19,6 @@ interface Props {
   onChange: (next: FiltersState) => void;
 }
 
-
-
-
-
 export function PipelineFilters({ value, onChange }: Props) {
   const { workspace } = useWorkspace();
   const [members, setMembers] = useState<{ id: string; name: string }[]>([]);
@@ -43,14 +39,11 @@ export function PipelineFilters({ value, onChange }: Props) {
         .from("profiles")
         .select("id, full_name")
         .in("id", ids);
-      setMembers(
-        (profiles ?? []).map((p) => ({ id: p.id, name: p.full_name ?? "Unknown user" })),
-      );
+      setMembers((profiles ?? []).map((p) => ({ id: p.id, name: p.full_name ?? "Unknown user" })));
     })();
   }, [workspace]);
 
-  const activeCount =
-    value.owner.length + (value.minValue ? 1 : 0) + (value.maxValue ? 1 : 0);
+  const activeCount = value.owner.length + (value.minValue ? 1 : 0) + (value.maxValue ? 1 : 0);
 
   return (
     <div className="flex items-center gap-2">

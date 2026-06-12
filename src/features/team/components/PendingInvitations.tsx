@@ -4,12 +4,20 @@ import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useInvitations } from "../hooks/useInvitations";
 import { useWorkspace } from "@/shared/hooks/useWorkspace";
 
 export function PendingInvitations() {
-  const { invitations, memberEmails, loading, cancelInvitation, resendInvitation } = useInvitations();
+  const { invitations, memberEmails, loading, cancelInvitation, resendInvitation } =
+    useInvitations();
   const { role } = useWorkspace();
   const [busy, setBusy] = useState<string | null>(null);
 
@@ -70,22 +78,39 @@ export function PendingInvitations() {
                 <div className="flex items-center gap-2">
                   <span>{inv.email}</span>
                   {memberEmails.has(inv.email.toLowerCase()) && (
-                    <Badge variant="outline" className="text-xs">Already a member</Badge>
+                    <Badge variant="outline" className="text-xs">
+                      Already a member
+                    </Badge>
                   )}
                 </div>
               </TableCell>
-              <TableCell><Badge variant="secondary">{inv.role}</Badge></TableCell>
-              <TableCell className="text-sm text-muted-foreground">{inv.inviter_name ?? "—"}</TableCell>
+              <TableCell>
+                <Badge variant="secondary">{inv.role}</Badge>
+              </TableCell>
+              <TableCell className="text-sm text-muted-foreground">
+                {inv.inviter_name ?? "—"}
+              </TableCell>
               <TableCell className="text-sm text-muted-foreground">
                 {formatDistanceToNow(new Date(inv.created_at), { addSuffix: true })}
               </TableCell>
               {canManage && (
                 <TableCell className="text-right">
                   <div className="flex items-center justify-end gap-1">
-                    <Button variant="ghost" size="sm" disabled={busy === inv.id} onClick={() => handleResend(inv.id, inv.email)}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={busy === inv.id}
+                      onClick={() => handleResend(inv.id, inv.email)}
+                    >
                       Resend
                     </Button>
-                    <Button variant="ghost" size="sm" disabled={busy === inv.id} onClick={() => handleCancel(inv.id)} className="text-destructive">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={busy === inv.id}
+                      onClick={() => handleCancel(inv.id)}
+                      className="text-destructive"
+                    >
                       Cancel
                     </Button>
                   </div>

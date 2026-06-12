@@ -27,9 +27,7 @@ export function CalendarAgendaSidebar({
     .filter((e) => isSameLocalDay(e.start_at, today))
     .sort((a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime());
 
-  const dueToday = [...dealItems, ...taskItems].filter((it) =>
-    isSameLocalDay(it.date, today),
-  );
+  const dueToday = [...dealItems, ...taskItems].filter((it) => isSameLocalDay(it.date, today));
 
   return (
     <aside className="rounded-lg border bg-card p-4 space-y-3">
@@ -42,9 +40,7 @@ export function CalendarAgendaSidebar({
         </span>
       </div>
       {list.length === 0 ? (
-        <p className="text-xs text-muted-foreground py-6 text-center">
-          No events scheduled today.
-        </p>
+        <p className="text-xs text-muted-foreground py-6 text-center">No events scheduled today.</p>
       ) : (
         <ul className="space-y-2">
           {list.map((ev) => (
@@ -102,9 +98,7 @@ export function CalendarAgendaSidebar({
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-muted-foreground" />
             <h3 className="text-sm font-medium">Due today</h3>
-            <span className="ml-auto text-xs text-muted-foreground">
-              {dueToday.length}
-            </span>
+            <span className="ml-auto text-xs text-muted-foreground">{dueToday.length}</span>
           </div>
           <div className="space-y-1">
             {dueToday.map((it) => (

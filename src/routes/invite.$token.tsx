@@ -4,10 +4,10 @@ import { toast } from "sonner";
 import { supabase } from "@/shared/lib/supabase";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { useWorkspace } from "@/shared/hooks/useWorkspace";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RampelyLockup } from "@/shared/components/brand/RampelyLockup";
+import { AuthLogo, AuthShell } from "@/shared/components/AuthShell";
 
 export const Route = createFileRoute("/invite/$token")({
   component: AcceptInvitePage,
@@ -40,25 +40,46 @@ function AcceptInvitePage() {
     // Persist the token so the rescue redirect in _authenticated.tsx can find
     // it after a round-trip through /login or /signup (including OAuth).
     // It's cleared only after a successful accept_invitation() call.
-    try { sessionStorage.setItem("pending_invite_token", token); } catch {}
+    try {
+      sessionStorage.setItem("pending_invite_token", token);
+    } catch {
+      // sessionStorage can be unavailable (private mode) — non-fatal
+    }
     (async () => {
       const { data, error } = await supabase.rpc("get_invitation_by_token", { _token: token });
       if (cancelled) return;
-      if (error) { setError(error.message); setLoading(false); return; }
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
       const row = Array.isArray(data) ? data[0] : data;
-      if (!row) { setError("Invitation not found"); setLoading(false); return; }
+      if (!row) {
+        setError("Invitation not found");
+        setLoading(false);
+        return;
+      }
       setInvitation(row as InvitationData);
       setLoading(false);
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [token]);
 
   const handleAccept = async () => {
     setAccepting(true);
     const { data, error } = await supabase.rpc("accept_invitation", { _token: token });
     setAccepting(false);
-    if (error) { toast.error(error.message); return; }
-    try { sessionStorage.removeItem("pending_invite_token"); } catch {}
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    try {
+      sessionStorage.removeItem("pending_invite_token");
+    } catch {
+      // sessionStorage can be unavailable (private mode) — non-fatal
+    }
     toast.success(`Welcome to ${invitation?.workspace_name}!`);
     await refresh();
     if (data) setActiveWorkspace(data as unknown as string);
@@ -66,7 +87,11 @@ function AcceptInvitePage() {
   };
 
   const handleDecline = async () => {
-    try { sessionStorage.removeItem("pending_invite_token"); } catch {}
+    try {
+      sessionStorage.removeItem("pending_invite_token");
+    } catch {
+      // sessionStorage can be unavailable (private mode) — non-fatal
+    }
     await supabase.from("workspace_invitations").delete().eq("token", token);
     navigate({ to: session ? "/dashboard" : "/login", replace: true });
   };
@@ -97,7 +122,9 @@ function AcceptInvitePage() {
         </CardHeader>
         <CardContent>
           <Button asChild className="w-full">
-            <Link to="/login" search={{ invite_token: undefined, email: undefined }}>Go to Rampely</Link>
+            <Link to="/login" search={{ invite_token: undefined, email: undefined }}>
+              Go to Rampely
+            </Link>
           </Button>
         </CardContent>
       </Wrapper>
@@ -136,13 +163,19 @@ function AcceptInvitePage() {
         <InviteCard invitation={invitation} />
         <CardContent className="space-y-3 pt-0">
           <p className="text-sm text-muted-foreground">
-            This invitation is for <strong>{invitation.email}</strong>. You're signed in as <strong>{user?.email}</strong>.
-            Sign out and sign in with the correct email to accept.
+            This invitation is for <strong>{invitation.email}</strong>. You're signed in as{" "}
+            <strong>{user?.email}</strong>. Sign out and sign in with the correct email to accept.
           </p>
-          <Button variant="outline" className="w-full" onClick={async () => {
-            await supabase.auth.signOut();
-            navigate({ to: "/login", search: { invite_token: token, email: invitation.email } });
-          }}>Sign out</Button>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={async () => {
+              await supabase.auth.signOut();
+              navigate({ to: "/login", search: { invite_token: token, email: invitation.email } });
+            }}
+          >
+            Sign out
+          </Button>
         </CardContent>
       </Wrapper>
     );
@@ -156,7 +189,9 @@ function AcceptInvitePage() {
         <Button className="w-full" onClick={handleAccept} disabled={accepting}>
           {accepting ? "Accepting…" : "Accept invitation"}
         </Button>
-        <Button variant="ghost" className="w-full" onClick={handleDecline}>Decline</Button>
+        <Button variant="ghost" className="w-full" onClick={handleDecline}>
+          Decline
+        </Button>
       </CardContent>
     </Wrapper>
   );
@@ -164,14 +199,12 @@ function AcceptInvitePage() {
 
 function Wrapper({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <div className="px-6 pt-6 text-center">
-          <div className="flex justify-center"><RampelyLockup height={32} className="text-foreground" /></div>
-        </div>
-        {children}
-      </Card>
-    </div>
+    <AuthShell className="max-w-md">
+      <div className="px-6 pt-6 text-center">
+        <AuthLogo height={32} />
+      </div>
+      {children}
+    </AuthShell>
   );
 }
 
@@ -183,12 +216,14 @@ function InviteCard({ invitation }: { invitation: InvitationData }) {
         <CardDescription>
           <strong>{invitation.inviter_name}</strong> invited you to join{" "}
           <strong>{invitation.workspace_name}</strong> as a{" "}
-          <Badge variant="secondary" className="capitalize">{invitation.role}</Badge>
+          <Badge variant="secondary" className="capitalize">
+            {invitation.role}
+          </Badge>
         </CardDescription>
       </CardHeader>
       {invitation.message && (
         <CardContent className="pt-0">
-          <div className="rounded-md border-l-2 border-primary bg-muted/40 p-3 text-sm italic text-muted-foreground">
+          <div className="rounded-[10px] border border-primary/20 bg-primary/12 p-3 text-sm italic text-white/75">
             "{invitation.message}"
           </div>
         </CardContent>

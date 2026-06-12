@@ -123,14 +123,14 @@ export function useCalendarEvents(args: { from: Date; to: Date }) {
     [refresh],
   );
 
-  const remove = useCallback(
-    async (id: string) => {
-      const { error } = await supabase.from("calendar_events" as never).delete().eq("id", id);
-      if (error) throw error;
-      setEvents((prev) => prev.filter((e) => e.id !== id));
-    },
-    [],
-  );
+  const remove = useCallback(async (id: string) => {
+    const { error } = await supabase
+      .from("calendar_events" as never)
+      .delete()
+      .eq("id", id);
+    if (error) throw error;
+    setEvents((prev) => prev.filter((e) => e.id !== id));
+  }, []);
 
   return { events, loading, refresh, create, update, remove };
 }

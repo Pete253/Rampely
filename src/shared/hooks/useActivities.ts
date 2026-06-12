@@ -53,12 +53,7 @@ async function fetchAuthor(userId: string): Promise<ActivityAuthor | null> {
   return null;
 }
 
-export function useActivities({
-  contactId,
-  companyId,
-  dealId,
-  pageSize = 20,
-}: UseActivitiesArgs) {
+export function useActivities({ contactId, companyId, dealId, pageSize = 20 }: UseActivitiesArgs) {
   const { user } = useAuth();
   const { workspace } = useWorkspace();
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -100,29 +95,24 @@ export function useActivities({
 
   // Hydrate `author` on rows by looking up profiles (cached). Profiles RLS may
   // only return the current user — others fall back to null.
-  const hydrateAuthors = useCallback(
-    async (rows: Activity[]): Promise<Activity[]> => {
-      const missing = Array.from(
-        new Set(
-          rows
-            .map((r) => r.user_id)
-            .filter((id): id is string => !!id && !PROFILE_CACHE.has(id)),
-        ),
-      );
-      if (missing.length > 0) {
-        const { data } = await supabase
-          .from("profiles")
-          .select("id, full_name, avatar_url")
-          .in("id", missing);
-        for (const p of data ?? []) PROFILE_CACHE.set(p.id, p);
-      }
-      return rows.map((r) => ({
-        ...r,
-        author: r.user_id ? (PROFILE_CACHE.get(r.user_id) ?? null) : null,
-      }));
-    },
-    [],
-  );
+  const hydrateAuthors = useCallback(async (rows: Activity[]): Promise<Activity[]> => {
+    const missing = Array.from(
+      new Set(
+        rows.map((r) => r.user_id).filter((id): id is string => !!id && !PROFILE_CACHE.has(id)),
+      ),
+    );
+    if (missing.length > 0) {
+      const { data } = await supabase
+        .from("profiles")
+        .select("id, full_name, avatar_url")
+        .in("id", missing);
+      for (const p of data ?? []) PROFILE_CACHE.set(p.id, p);
+    }
+    return rows.map((r) => ({
+      ...r,
+      author: r.user_id ? (PROFILE_CACHE.get(r.user_id) ?? null) : null,
+    }));
+  }, []);
 
   const refresh = useCallback(async () => {
     if (!workspace) return;
@@ -188,15 +178,11 @@ export function useActivities({
             if (row.user_id && !PROFILE_CACHE.has(row.user_id)) {
               const author = await fetchAuthor(row.user_id);
               if (author) {
-                setActivities((prev) =>
-                  prev.map((a) => (a.id === row.id ? { ...a, author } : a)),
-                );
+                setActivities((prev) => prev.map((a) => (a.id === row.id ? { ...a, author } : a)));
               }
             } else if (row.user_id) {
               const author = PROFILE_CACHE.get(row.user_id) ?? null;
-              setActivities((prev) =>
-                prev.map((a) => (a.id === row.id ? { ...a, author } : a)),
-              );
+              setActivities((prev) => prev.map((a) => (a.id === row.id ? { ...a, author } : a)));
             }
           } else if (payload.eventType === "UPDATE") {
             const row = payload.new as Activity;

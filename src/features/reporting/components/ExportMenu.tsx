@@ -35,10 +35,12 @@ export function ExportMenu({ dashboardRef, setIsExporting, rangeSlug }: Props) {
     await new Promise<void>((r) => requestAnimationFrame(() => r()));
 
     try {
+      // Capture against the app surface color — the dashboard is dark-themed,
+      // so a white backdrop would make the (white) text unreadable.
       const imgData = await toPng(node, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#13152E",
       });
       const img = await loadImage(imgData);
       const targetWidth = 800;
@@ -65,7 +67,11 @@ export function ExportMenu({ dashboardRef, setIsExporting, rangeSlug }: Props) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button size="sm" variant="outline" disabled={busy} className="gap-1.5">
-          {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
+          {busy ? (
+            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+          ) : (
+            <Download className="h-3.5 w-3.5" />
+          )}
           Export
         </Button>
       </DropdownMenuTrigger>
@@ -73,9 +79,7 @@ export function ExportMenu({ dashboardRef, setIsExporting, rangeSlug }: Props) {
         <DropdownMenuItem onClick={exportPdf} disabled={busy}>
           Export as PDF
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => toast.info("Coming soon")}>
-          Export as CSV
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => toast.info("Coming soon")}>Export as CSV</DropdownMenuItem>
         <DropdownMenuItem onClick={() => toast.info("Coming soon")}>
           Export as Excel
         </DropdownMenuItem>

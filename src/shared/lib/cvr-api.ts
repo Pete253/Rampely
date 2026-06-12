@@ -40,21 +40,34 @@ const TTL_MS = 10 * 60 * 1000;
 function cacheGetNumber(key: string): CvrCompany | null | undefined {
   const hit = CACHE_NUMBER.get(key);
   if (!hit) return undefined;
-  if (Date.now() - hit.ts > TTL_MS) { CACHE_NUMBER.delete(key); return undefined; }
+  if (Date.now() - hit.ts > TTL_MS) {
+    CACHE_NUMBER.delete(key);
+    return undefined;
+  }
   return hit.value;
 }
 
 function cacheGetName(key: string): CvrCompany[] | undefined {
   const hit = CACHE_NAME.get(key);
   if (!hit) return undefined;
-  if (Date.now() - hit.ts > TTL_MS) { CACHE_NAME.delete(key); return undefined; }
+  if (Date.now() - hit.ts > TTL_MS) {
+    CACHE_NAME.delete(key);
+    return undefined;
+  }
   return hit.value;
 }
 
 // ---------- edge function call ----------
 
-interface EdgeOk { ok: true; data: CvrCompany | CvrCompany[] | null }
-interface EdgeErr { ok: false; error: string; statusCode?: number }
+interface EdgeOk {
+  ok: true;
+  data: CvrCompany | CvrCompany[] | null;
+}
+interface EdgeErr {
+  ok: false;
+  error: string;
+  statusCode?: number;
+}
 type EdgeResponse = EdgeOk | EdgeErr;
 
 async function invokeProxy(type: "number" | "name", query: string): Promise<EdgeResponse> {
@@ -80,20 +93,19 @@ export async function cvrLookupByNumber(cvr: string): Promise<CvrCompany | null>
 
   if (!res.ok) {
     const err = res as EdgeErr;
-    if (err.statusCode === 429) throw new CvrError("CVR registry rate limit reached. Try again in a moment.", 429);
-    if (err.statusCode && err.statusCode >= 500) throw new CvrError("CVR registry is temporarily unavailable.", err.statusCode);
+    if (err.statusCode === 429)
+      throw new CvrError("CVR registry rate limit reached. Try again in a moment.", 429);
+    if (err.statusCode && err.statusCode >= 500)
+      throw new CvrError("CVR registry is temporarily unavailable.", err.statusCode);
     throw new CvrError(err.error || "CVR lookup failed");
   }
 
-  const value = (res.data as CvrCompany | null);
+  const value = res.data as CvrCompany | null;
   CACHE_NUMBER.set(key, { ts: Date.now(), value });
   return value;
 }
 
-export async function cvrSearchByName(
-  name: string,
-  _limit = 10,
-): Promise<CvrCompany[]> {
+export async function cvrSearchByName(name: string, _limit = 10): Promise<CvrCompany[]> {
   const trimmed = name.trim();
   if (!trimmed) return [];
   const key = `name:${trimmed.toLowerCase()}`;
@@ -104,8 +116,10 @@ export async function cvrSearchByName(
 
   if (!res.ok) {
     const err = res as EdgeErr;
-    if (err.statusCode === 429) throw new CvrError("CVR registry rate limit reached. Try again in a moment.", 429);
-    if (err.statusCode && err.statusCode >= 500) throw new CvrError("CVR registry is temporarily unavailable.", err.statusCode);
+    if (err.statusCode === 429)
+      throw new CvrError("CVR registry rate limit reached. Try again in a moment.", 429);
+    if (err.statusCode && err.statusCode >= 500)
+      throw new CvrError("CVR registry is temporarily unavailable.", err.statusCode);
     throw new CvrError(err.error || "CVR search failed");
   }
 

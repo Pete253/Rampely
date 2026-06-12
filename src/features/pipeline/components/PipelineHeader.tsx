@@ -10,12 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DealForm } from "./DealForm";
 import { formatDKK, totalValue, weightedValue } from "../lib/pipeline-utils";
 import type { Pipeline, PipelineStage } from "@/shared/lib/types";
@@ -75,7 +70,10 @@ export function PipelineHeader({
           </SelectContent>
         </Select>
         <Button asChild variant="outline" size="sm">
-          <Link to="/pipeline/settings" search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}>
+          <Link
+            to="/pipeline/settings"
+            search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}
+          >
             <Settings className="mr-1 h-4 w-4" /> Settings
           </Link>
         </Button>
@@ -131,8 +129,10 @@ export function PipelineHeader({
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="text-right">
-      <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
-      <div className="font-semibold">{value}</div>
+      <div className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/50">
+        {label}
+      </div>
+      <div className="font-bold text-primary-light">{value}</div>
     </div>
   );
 }

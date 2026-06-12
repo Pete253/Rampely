@@ -11,13 +11,7 @@ import {
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useCommandPalette } from "./use-command-palette";
 import { useGlobalSearch, type SearchResult } from "@/shared/hooks/useGlobalSearch";
-import {
-  GROUPS,
-  GROUP_ORDER,
-  QUICK_ACTIONS,
-  entityRoute,
-  type EntityType,
-} from "./search-groups";
+import { GROUPS, GROUP_ORDER, QUICK_ACTIONS, entityRoute, type EntityType } from "./search-groups";
 import { SearchResultItem } from "./SearchResultItem";
 import { QuickAction } from "./QuickAction";
 import { usePendingCreate } from "@/shared/contexts/PendingCreateContext";
@@ -84,7 +78,9 @@ export function CommandPalette() {
   }
 
   const filteredQuickActions = hasQuery
-    ? QUICK_ACTIONS.filter((a) => a.label.toLowerCase().includes(search.debouncedQuery.toLowerCase()))
+    ? QUICK_ACTIONS.filter((a) =>
+        a.label.toLowerCase().includes(search.debouncedQuery.toLowerCase()),
+      )
     : QUICK_ACTIONS;
 
   return (
@@ -106,7 +102,9 @@ export function CommandPalette() {
             {hasQuery && totalMatches === 0 && filteredQuickActions.length === 0 && (
               <CommandEmpty>
                 <div className="space-y-1 py-2">
-                  <div className="text-sm">No results for &ldquo;{search.debouncedQuery}&rdquo;</div>
+                  <div className="text-sm">
+                    No results for &ldquo;{search.debouncedQuery}&rdquo;
+                  </div>
                   <div className="text-xs text-muted-foreground">
                     Try a shorter or different term.
                   </div>

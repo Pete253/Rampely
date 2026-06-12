@@ -58,8 +58,7 @@ export function CompanyList({ initialSearch = "" }: Props = {}) {
   }, [pendingCreate, setPendingCreate]);
 
   const filtered = useMemo(
-    () =>
-      companies.filter((c) => c.name.toLowerCase().includes(search.toLowerCase().trim())),
+    () => companies.filter((c) => c.name.toLowerCase().includes(search.toLowerCase().trim())),
     [companies, search],
   );
 
@@ -78,7 +77,7 @@ export function CompanyList({ initialSearch = "" }: Props = {}) {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Companies</h1>
+          <h1 className="text-2xl font-extrabold tracking-[-0.03em]">Companies</h1>
           <p className="text-sm text-muted-foreground">
             {companies.length} {companies.length === 1 ? "company" : "companies"}
           </p>
@@ -154,11 +153,7 @@ export function CompanyList({ initialSearch = "" }: Props = {}) {
               {filtered.map((c) => (
                 <TableRow key={c.id}>
                   <TableCell className="font-medium">
-                    <Link
-                      to="/companies/$id"
-                      params={{ id: c.id }}
-                      className="hover:underline"
-                    >
+                    <Link to="/companies/$id" params={{ id: c.id }} className="hover:underline">
                       {c.name}
                     </Link>
                   </TableCell>
@@ -266,4 +261,3 @@ export function CompanyList({ initialSearch = "" }: Props = {}) {
     </div>
   );
 }
-

@@ -32,12 +32,7 @@ import { ContactSelector } from "@/features/pipeline/components/ContactSelector"
 import { DealSelector } from "./DealSelector";
 import { ActivityTimeline } from "@/shared/components/activity/ActivityTimeline";
 
-import type {
-  CreateTaskInput,
-  TaskPriority,
-  TaskRecord,
-  TaskStatus,
-} from "../hooks/useTasks";
+import type { CreateTaskInput, TaskPriority, TaskRecord, TaskStatus } from "../hooks/useTasks";
 
 interface Props {
   task: TaskRecord | null;
@@ -109,10 +104,10 @@ export function TaskDetailDrawer({
               className={cn(
                 "text-[10px] px-1.5 py-0.5 rounded border",
                 task.status === "done"
-                  ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/30"
+                  ? "bg-success/15 text-success border-success/30"
                   : task.status === "in_progress"
-                    ? "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30"
-                    : "bg-muted text-muted-foreground border-border",
+                    ? "bg-warning/15 text-warning border-warning/30"
+                    : "bg-white/8 text-white/60 border-white/12",
               )}
             >
               {task.status.replace("_", " ")}
@@ -225,9 +220,7 @@ export function TaskDetailDrawer({
             <Button
               variant="outline"
               size="sm"
-              onClick={() =>
-                onSetStatus(task.id, task.status === "done" ? "todo" : "done")
-              }
+              onClick={() => onSetStatus(task.id, task.status === "done" ? "todo" : "done")}
             >
               {task.status === "done" ? "Mark incomplete" : "Mark complete"}
             </Button>

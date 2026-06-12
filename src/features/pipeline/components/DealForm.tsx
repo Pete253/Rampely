@@ -253,7 +253,12 @@ export function DealForm({
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea rows={3} placeholder="Notes about this deal…" {...field} value={field.value ?? ""} />
+                <Textarea
+                  rows={3}
+                  placeholder="Notes about this deal…"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

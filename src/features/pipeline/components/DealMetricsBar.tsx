@@ -13,19 +13,16 @@ export function DealMetricsBar({ deal, daysInStage }: Props) {
   const value = Number(deal.value ?? 0);
   const probability = deal.stage?.probability ?? 0;
   const weighted = value * (probability / 100);
-  const daysOpen = Math.max(
-    0,
-    differenceInCalendarDays(new Date(), new Date(deal.created_at)),
-  );
+  const daysOpen = Math.max(0, differenceInCalendarDays(new Date(), new Date(deal.created_at)));
   const dotColor = closeDateColor(deal.expected_close_date);
   const dotClass =
     dotColor === "green"
-      ? "bg-emerald-500"
+      ? "bg-success"
       : dotColor === "amber"
-        ? "bg-amber-500"
+        ? "bg-warning"
         : dotColor === "red"
-          ? "bg-red-500"
-          : "bg-muted";
+          ? "bg-danger"
+          : "bg-white/20";
 
   const items: Array<{ label: string; value: React.ReactNode }> = [
     { label: "Value", value: formatDKK(value) },
@@ -53,9 +50,7 @@ export function DealMetricsBar({ deal, daysInStage }: Props) {
       <CardContent className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-3 lg:grid-cols-6">
         {items.map((m) => (
           <div key={m.label} className="space-y-1">
-            <div className="text-xs uppercase tracking-wide text-muted-foreground">
-              {m.label}
-            </div>
+            <div className="overline-label text-white/50">{m.label}</div>
             <div className="text-sm font-semibold">{m.value}</div>
           </div>
         ))}

@@ -104,9 +104,7 @@ export function CalendarMonthView({
                   </div>
                 ))}
                 {totalOverflow > 0 && (
-                  <div className="text-[11px] text-muted-foreground">
-                    +{totalOverflow} more
-                  </div>
+                  <div className="text-[11px] text-muted-foreground">+{totalOverflow} more</div>
                 )}
               </div>
             </button>

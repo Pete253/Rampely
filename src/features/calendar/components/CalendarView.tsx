@@ -13,11 +13,7 @@ import { CalendarAgendaSidebar } from "./CalendarAgendaSidebar";
 import { EventForm } from "./EventForm";
 import { EventPopover } from "./EventPopover";
 import { TaskDetailDrawer } from "./TaskDetailDrawer";
-import {
-  getRangeBounds,
-  shiftAnchor,
-  type CalendarViewMode,
-} from "../lib/calendar-utils";
+import { getRangeBounds, shiftAnchor, type CalendarViewMode } from "../lib/calendar-utils";
 import {
   useCalendarEvents,
   type CalendarEvent,
@@ -142,19 +138,16 @@ export function CalendarView({ initialView, initialDate }: Props = {}) {
               }
             />
           )}
-          {!loading &&
-            events.length === 0 &&
-            taskItems.length === 0 &&
-            dealItems.length === 0 && (
-              <div className="mt-2">
-                <EmptyState
-                  icon={CalendarIcon}
-                  title="No events"
-                  description={`Nothing scheduled this ${view}.`}
-                  action={{ label: "New event", onClick: () => openCreate() }}
-                />
-              </div>
-            )}
+          {!loading && events.length === 0 && taskItems.length === 0 && dealItems.length === 0 && (
+            <div className="mt-2">
+              <EmptyState
+                icon={CalendarIcon}
+                title="No events"
+                description={`Nothing scheduled this ${view}.`}
+                action={{ label: "New event", onClick: () => openCreate() }}
+              />
+            </div>
+          )}
         </div>
         <CalendarAgendaSidebar
           events={events}

@@ -49,12 +49,12 @@ export function DealCard({ deal, lastMoveAt, onEdit, onDelete }: Props) {
   const dot = closeDateColor(deal.expected_close_date);
   const dotClass =
     dot === "green"
-      ? "bg-emerald-500"
+      ? "bg-success"
       : dot === "amber"
-        ? "bg-amber-500"
+        ? "bg-warning"
         : dot === "red"
-          ? "bg-red-500"
-          : "bg-muted";
+          ? "bg-danger"
+          : "bg-white/20";
 
   const days = daysInStage(deal, lastMoveAt);
   const ownerInitials =
@@ -76,8 +76,8 @@ export function DealCard({ deal, lastMoveAt, onEdit, onDelete }: Props) {
         {...listeners}
         onClick={() => navigate({ to: "/deals/$id", params: { id: deal.id } })}
         className={cn(
-          "group relative rounded-md border bg-card p-3 text-sm shadow-sm cursor-grab active:cursor-grabbing transition-shadow",
-          isDragging && "opacity-50 shadow-lg",
+          "group relative cursor-grab rounded-[10px] border bg-card p-3 text-sm transition-all duration-200 hover:bg-white/8 active:cursor-grabbing",
+          isDragging && "opacity-50",
         )}
       >
         {(onEdit || onDelete) && (
@@ -125,29 +125,33 @@ export function DealCard({ deal, lastMoveAt, onEdit, onDelete }: Props) {
           </div>
         )}
 
-        <div className="font-semibold leading-tight line-clamp-2 pr-6">{deal.title}</div>
-        <div className="mt-1 text-base font-medium">{formatDKK(Number(deal.value ?? 0))}</div>
+        <div className="line-clamp-2 pr-6 text-[13px] font-bold leading-tight text-foreground">
+          {deal.title}
+        </div>
+        <div className="mt-1 text-sm font-semibold text-primary-light">
+          {formatDKK(Number(deal.value ?? 0))}
+        </div>
 
         {deal.company && (
           <Link
             to="/companies/$id"
             params={{ id: deal.company.id }}
             onPointerDown={(e) => e.stopPropagation()}
-            className="mt-1 block truncate text-xs text-primary hover:underline"
+            className="mt-1 block truncate text-xs text-blue-3 hover:underline"
           >
             {deal.company.name}
           </Link>
         )}
 
         {deal.contact && (
-          <div className="mt-0.5 truncate text-xs text-muted-foreground">
+          <div className="mt-0.5 truncate text-xs text-white/40">
             {deal.contact.first_name} {deal.contact.last_name ?? ""}
           </div>
         )}
 
-        <div className="mt-2 flex items-center justify-between gap-2 text-xs text-muted-foreground">
+        <div className="mt-2 flex items-center justify-between gap-2 text-[11px] text-white/30">
           <div className="flex items-center gap-1.5">
-            <span className={cn("h-2 w-2 rounded-full", dotClass)} />
+            <span className={cn("h-1.5 w-1.5 rounded-full", dotClass)} />
             <span>
               {deal.expected_close_date
                 ? format(new Date(deal.expected_close_date), "MMM d")

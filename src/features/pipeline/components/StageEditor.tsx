@@ -1,16 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  DndContext,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
+import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
+import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -52,9 +42,7 @@ export function StageEditor({ pipelineId }: Props) {
     setLocalOrder(stages.map((s) => s.id));
   }, [stages]);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   async function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -219,9 +207,7 @@ function StageRow({
 
         <Select
           value={stage.stage_type}
-          onValueChange={(v) =>
-            onUpdate({ stage_type: v as "open" | "won" | "lost" })
-          }
+          onValueChange={(v) => onUpdate({ stage_type: v as "open" | "won" | "lost" })}
         >
           <SelectTrigger className="h-8 w-24">
             <SelectValue />

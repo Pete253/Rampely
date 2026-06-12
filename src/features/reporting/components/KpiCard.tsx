@@ -52,16 +52,12 @@ export function KpiCard({
           </Alert>
         ) : (
           <>
-            <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-              {label}
-            </div>
+            <div className="overline-label text-white/50">{label}</div>
             <div className="mt-2 flex items-baseline gap-2">
-              <div className="text-2xl font-semibold tracking-tight">{value}</div>
+              <div className="text-2xl font-extrabold tracking-[-0.03em]">{value}</div>
               <TrendBadge pct={pct} direction={direction} />
             </div>
-            {subValue && (
-              <div className="text-xs text-muted-foreground mt-0.5">{subValue}</div>
-            )}
+            {subValue && <div className="text-xs text-muted-foreground mt-0.5">{subValue}</div>}
             <div className="mt-3 h-12 -mx-1">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={sparkline} margin={{ top: 4, right: 4, bottom: 0, left: 4 }}>
@@ -94,10 +90,10 @@ function TrendBadge({ pct, direction }: { pct: number; direction: "up" | "down" 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-0.5 rounded text-xs font-medium px-1.5 py-0.5",
-        direction === "up" && "bg-emerald-500/10 text-emerald-600",
-        direction === "down" && "bg-red-500/10 text-red-600",
-        direction === "flat" && "bg-muted text-muted-foreground",
+        "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs font-semibold",
+        direction === "up" && "bg-success/12 text-success",
+        direction === "down" && "bg-danger/12 text-danger",
+        direction === "flat" && "bg-white/8 text-white/50",
       )}
     >
       <Icon className="h-3 w-3" />

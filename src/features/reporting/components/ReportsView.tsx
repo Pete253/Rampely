@@ -82,9 +82,9 @@ export function ReportsView({ preset, customFrom, customTo }: Props) {
           <div
             style={{
               padding: "24px",
-              background: "#ffffff",
-              borderBottom: "1px solid #e5e7eb",
-              fontFamily: "Inter, system-ui, sans-serif",
+              background: "#13152E",
+              borderBottom: "1px solid rgba(255,255,255,0.12)",
+              fontFamily: "Manrope, system-ui, sans-serif",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
@@ -94,22 +94,22 @@ export function ReportsView({ preset, customFrom, customTo }: Props) {
               <div
                 style={{
                   fontSize: "24px",
-                  fontWeight: 700,
-                  color: "#0f172a",
-                  letterSpacing: "-0.02em",
+                  fontWeight: 800,
+                  color: "#FFFFFF",
+                  letterSpacing: "-0.03em",
                 }}
               >
                 Rampely
               </div>
-              <div style={{ fontSize: "14px", color: "#64748b", marginTop: "2px" }}>
+              <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.55)", marginTop: "2px" }}>
                 {workspace?.name ?? "Workspace"}
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: "13px", fontWeight: 600, color: "#0f172a" }}>
+              <div style={{ fontSize: "13px", fontWeight: 600, color: "#C7CFF3" }}>
                 {range.label}
               </div>
-              <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "2px" }}>
+              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", marginTop: "2px" }}>
                 Generated {format(new Date(), "dd MMM yyyy, HH:mm")}
               </div>
             </div>

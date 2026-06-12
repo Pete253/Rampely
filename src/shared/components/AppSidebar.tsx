@@ -1,5 +1,17 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { BarChart3, LogOut, ChevronsLeft, ChevronsRight, Building2, Users, KanbanSquare, Calendar, CheckSquare, Settings, type LucideIcon } from "lucide-react";
+import {
+  BarChart3,
+  LogOut,
+  ChevronsLeft,
+  ChevronsRight,
+  Building2,
+  Users,
+  KanbanSquare,
+  Calendar,
+  CheckSquare,
+  Settings,
+  type LucideIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -44,22 +56,22 @@ export function AppSidebar() {
   return (
     <aside
       className={cn(
-        "flex h-screen flex-col border-r bg-sidebar text-sidebar-foreground transition-[width] duration-200",
-        collapsed ? "w-16" : "w-60",
+        "flex h-screen flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200",
+        collapsed ? "w-16" : "w-[200px]",
       )}
     >
       {/* Logo */}
-      <div className="flex h-14 items-center justify-between border-b px-3">
+      <div className="flex h-14 items-center justify-between border-b border-sidebar-border px-3">
         {collapsed ? (
-          <RampelyMark size={28} />
+          <RampelyMark size={26} />
         ) : (
-          <RampelyLockup height={28} className="text-sidebar-foreground" />
+          <RampelyLockup height={26} className="text-white" />
         )}
         <Button
           variant="ghost"
           size="icon"
           onClick={() => setCollapsed((c) => !c)}
-          className="ml-auto h-8 w-8"
+          className="ml-auto h-7 w-7 text-white/40 hover:text-white"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? <ChevronsRight className="h-4 w-4" /> : <ChevronsLeft className="h-4 w-4" />}
@@ -67,24 +79,25 @@ export function AppSidebar() {
       </div>
 
       {/* Workspace switcher */}
-      <div className="border-b px-2 py-1">
+      <div className="border-b border-sidebar-border px-2 py-1">
         <WorkspaceSwitcher collapsed={collapsed} />
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 space-y-1 p-2">
+      <nav className="flex-1 space-y-0.5 p-2">
         {navItems.map((item) => {
-          const active = location.pathname === item.to || location.pathname.startsWith(item.to + "/");
+          const active =
+            location.pathname === item.to || location.pathname.startsWith(item.to + "/");
           const Icon = item.icon;
           return (
             <Link
               key={item.to}
               to={item.to}
               className={cn(
-                "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-2.5 rounded-sm px-2.5 py-2 text-[13px] transition-all duration-200",
                 active
-                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                  ? "bg-sidebar-accent font-semibold text-sidebar-accent-foreground"
+                  : "font-normal text-white/40 hover:bg-white/5 hover:text-white/75",
                 collapsed && "justify-center px-0",
               )}
             >
@@ -96,26 +109,26 @@ export function AppSidebar() {
       </nav>
 
       {/* User */}
-      <div className="border-t p-2">
+      <div className="border-t border-sidebar-border p-2">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
               className={cn(
-                "flex w-full items-center gap-3 rounded-md p-2 text-left transition-colors hover:bg-sidebar-accent",
+                "flex w-full items-center gap-2.5 rounded-sm p-2 text-left transition-colors hover:bg-white/5",
                 collapsed && "justify-center",
               )}
             >
               <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary text-primary-foreground text-xs">
+                <AvatarFallback className="bg-primary text-xs font-bold text-primary-foreground">
                   {initials}
                 </AvatarFallback>
               </Avatar>
               {!collapsed && (
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium">
+                  <div className="truncate text-[13px] font-semibold text-white/90">
                     {profile?.full_name ?? "User"}
                   </div>
-                  <div className="truncate text-xs text-muted-foreground">{profile?.email}</div>
+                  <div className="truncate text-[11px] text-white/40">{profile?.email}</div>
                 </div>
               )}
             </button>

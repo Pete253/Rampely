@@ -112,10 +112,7 @@ export function useCalendarOverlays({ from, to }: Args) {
           // Treat as local-noon to avoid TZ rollover on date-only column
           date: parseDateOnly(d.expected_close_date),
           title: `Close: ${d.title}`,
-          secondary:
-            d.value != null
-              ? `${formatNumber(d.value)} ${d.currency}`
-              : d.currency,
+          secondary: d.value != null ? `${formatNumber(d.value)} ${d.currency}` : d.currency,
           status: d.status,
           overdue: false,
           muted: d.status === "won" || d.status === "lost",

@@ -15,13 +15,15 @@ interface Props {
   id?: string;
 }
 
-export function CountrySelect({ value, onChange, placeholder = "Select a country", disabled, id }: Props) {
+export function CountrySelect({
+  value,
+  onChange,
+  placeholder = "Select a country",
+  disabled,
+  id,
+}: Props) {
   return (
-    <Select
-      value={value}
-      onValueChange={(v) => onChange(v as CountryCode)}
-      disabled={disabled}
-    >
+    <Select value={value} onValueChange={(v) => onChange(v as CountryCode)} disabled={disabled}>
       <SelectTrigger id={id}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

@@ -30,17 +30,14 @@ export function TaskCard({ task, onClick }: Props) {
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onClick()}
       className={cn(
-        "rounded-md border bg-background p-3 shadow-sm cursor-grab active:cursor-grabbing space-y-2",
+        "cursor-grab space-y-2 rounded-[10px] border bg-card p-3 transition-colors hover:bg-white/8 active:cursor-grabbing",
         isDragging && "opacity-40",
       )}
     >
       <div className="text-sm font-medium">{task.title}</div>
       <div className="flex items-center justify-between gap-2">
         <span
-          className={cn(
-            "text-[10px] px-1.5 py-0.5 rounded border",
-            priorityColor(task.priority),
-          )}
+          className={cn("text-[10px] px-1.5 py-0.5 rounded border", priorityColor(task.priority))}
         >
           {task.priority}
         </span>
@@ -50,7 +47,7 @@ export function TaskCard({ task, onClick }: Props) {
               "text-xs",
               done && "text-muted-foreground line-through",
               !done && due.overdue && "text-destructive font-medium",
-              !done && !due.overdue && due.soon && "text-amber-600 dark:text-amber-400",
+              !done && !due.overdue && due.soon && "text-warning",
               !done && !due.overdue && !due.soon && "text-muted-foreground",
             )}
           >

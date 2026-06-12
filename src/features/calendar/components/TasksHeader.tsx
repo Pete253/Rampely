@@ -9,12 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type {
-  TaskDueRange,
-  TaskFilters,
-  TaskPriority,
-  TaskStatus,
-} from "../hooks/useTasks";
+import type { TaskDueRange, TaskFilters, TaskPriority, TaskStatus } from "../hooks/useTasks";
 
 export type TasksViewMode = "list" | "board";
 
@@ -52,7 +47,7 @@ export function TasksHeader({ view, onViewChange, filters, onFiltersChange, onNe
           onValueChange={(v) =>
             onFiltersChange({
               ...filters,
-              priorities: v === "__all__" ? undefined : ([v as TaskPriority]),
+              priorities: v === "__all__" ? undefined : [v as TaskPriority],
             })
           }
         >
@@ -72,7 +67,7 @@ export function TasksHeader({ view, onViewChange, filters, onFiltersChange, onNe
           onValueChange={(v) =>
             onFiltersChange({
               ...filters,
-              statuses: v === "__all__" ? undefined : ([v as TaskStatus]),
+              statuses: v === "__all__" ? undefined : [v as TaskStatus],
             })
           }
         >

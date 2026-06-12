@@ -31,7 +31,7 @@ export function TasksView() {
   const { tasks: allTasks } = useTasks({});
 
   // Keep selected task in sync after refresh
-  const activeFresh = active ? tasks.find((t) => t.id === active.id) ?? active : null;
+  const activeFresh = active ? (tasks.find((t) => t.id === active.id) ?? active) : null;
 
   return (
     <div className="space-y-4">

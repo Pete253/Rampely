@@ -81,10 +81,7 @@ export function DealSelector({ value, onChange, companyId, disabled }: Props) {
                   }}
                 >
                   <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === d.id ? "opacity-100" : "opacity-0",
-                    )}
+                    className={cn("mr-2 h-4 w-4", value === d.id ? "opacity-100" : "opacity-0")}
                   />
                   {d.title}
                 </CommandItem>

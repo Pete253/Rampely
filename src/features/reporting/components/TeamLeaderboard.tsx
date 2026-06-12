@@ -99,7 +99,12 @@ export function TeamLeaderboard({ from, to }: Props) {
                       )}
                     >
                       {c.label}
-                      {sortKey === c.key && (sortDir === "desc" ? <ArrowDown className="h-3 w-3" /> : <ArrowUp className="h-3 w-3" />)}
+                      {sortKey === c.key &&
+                        (sortDir === "desc" ? (
+                          <ArrowDown className="h-3 w-3" />
+                        ) : (
+                          <ArrowUp className="h-3 w-3" />
+                        ))}
                     </button>
                   </TableHead>
                 ))}

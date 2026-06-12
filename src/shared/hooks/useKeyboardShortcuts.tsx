@@ -9,10 +9,7 @@ import {
 } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { isEditableTarget } from "@/shared/components/search/use-command-palette";
-import {
-  usePendingCreate,
-  type CreateEntity,
-} from "@/shared/contexts/PendingCreateContext";
+import { usePendingCreate, type CreateEntity } from "@/shared/contexts/PendingCreateContext";
 
 interface ShortcutsHelpContextValue {
   helpOpen: boolean;

@@ -7,11 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCountryFeatures } from "@/shared/hooks/useCountryFeatures";
-import {
-  cvrLookupByNumber,
-  cvrSearchByName,
-  type CvrCompany,
-} from "@/shared/lib/cvr-api";
+import { cvrLookupByNumber, cvrSearchByName, type CvrCompany } from "@/shared/lib/cvr-api";
 import type { CompanyInput } from "../hooks/useCompanies";
 
 type Props = {
@@ -98,7 +94,10 @@ export function CompanyForm({ initial, submitLabel = "Create", onSubmit, onCance
     <form onSubmit={handleSubmit} className="space-y-4">
       {cvrEnabled && (
         <div className="space-y-2 rounded-md border bg-muted/30 p-3">
-          <Label htmlFor="cvr-search" className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+          <Label
+            htmlFor="cvr-search"
+            className="text-xs font-medium uppercase tracking-wide text-muted-foreground"
+          >
             Search {businessRegistry!.label}
           </Label>
           <div className="flex gap-2">
@@ -174,11 +173,7 @@ export function CompanyForm({ initial, submitLabel = "Create", onSubmit, onCance
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="website">Website</Label>
-          <Input
-            id="website"
-            value={website ?? ""}
-            onChange={(e) => setWebsite(e.target.value)}
-          />
+          <Input id="website" value={website ?? ""} onChange={(e) => setWebsite(e.target.value)} />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="industry">Industry</Label>

@@ -59,9 +59,7 @@ export function DealStageHistory({ dealId }: Props) {
                           className="h-3 w-3 rounded-full ring-4 ring-background"
                           style={{ backgroundColor: e.stage?.color ?? "var(--muted)" }}
                         />
-                        <div className="mt-2 text-xs font-medium">
-                          {e.stage?.name ?? "Unknown"}
-                        </div>
+                        <div className="mt-2 text-xs font-medium">{e.stage?.name ?? "Unknown"}</div>
                         <div className="mt-0.5 text-[11px] text-muted-foreground">
                           {days}d {!e.exited_at && "(current)"}
                         </div>

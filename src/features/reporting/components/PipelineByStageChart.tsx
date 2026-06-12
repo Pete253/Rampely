@@ -4,14 +4,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
 import { usePipelineByStage } from "../hooks/usePipelineByStage";
-import { chartTheme, tooltipStyle } from "../lib/chart-config";
+import { chartTheme, tooltipCursor, tooltipStyle } from "../lib/chart-config";
 import { formatCompactDKK, formatDKK } from "../lib/reporting-utils";
 
 interface Props {
   onStageClick?: (stageId: string, stageName: string) => void;
 }
 
-const STAGE_FALLBACK = ["#6366f1", "#8b5cf6", "#ec4899", "#f59e0b", "#10b981", "#06b6d4"];
+const STAGE_FALLBACK = ["#4759E8", "#6B7FFF", "#8B99F0", "#2D3AB0", "#28C840", "#FEBC2E"];
 
 export function PipelineByStageChart({ onStageClick }: Props) {
   const { data, loading, error, refetch } = usePipelineByStage();
@@ -48,6 +48,7 @@ export function PipelineByStageChart({ onStageClick }: Props) {
               />
               <Tooltip
                 contentStyle={tooltipStyle}
+                cursor={tooltipCursor}
                 formatter={(v: number) => [formatDKK(Number(v)), "Value"]}
               />
               <Bar
@@ -57,7 +58,10 @@ export function PipelineByStageChart({ onStageClick }: Props) {
                 radius={[0, 4, 4, 0]}
               >
                 {data.map((d, i) => (
-                  <Cell key={d.stage_id} fill={d.color || STAGE_FALLBACK[i % STAGE_FALLBACK.length]} />
+                  <Cell
+                    key={d.stage_id}
+                    fill={d.color || STAGE_FALLBACK[i % STAGE_FALLBACK.length]}
+                  />
                 ))}
               </Bar>
             </BarChart>

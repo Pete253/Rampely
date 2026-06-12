@@ -25,8 +25,10 @@ export function TaskRow({
   const done = task.status === "done";
   const due = relativeDueLabel(task.due_at, { done });
 
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: task.id, disabled: !draggable });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: task.id,
+    disabled: !draggable,
+  });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -109,10 +111,7 @@ export function TaskRow({
         )}
       </div>
       <span
-        className={cn(
-          "text-[10px] px-1.5 py-0.5 rounded border",
-          priorityColor(task.priority),
-        )}
+        className={cn("text-[10px] px-1.5 py-0.5 rounded border", priorityColor(task.priority))}
       >
         {task.priority}
       </span>
@@ -121,7 +120,7 @@ export function TaskRow({
           className={cn(
             "text-xs whitespace-nowrap",
             due.overdue && "text-destructive font-medium",
-            !due.overdue && due.soon && "text-amber-600 dark:text-amber-400",
+            !due.overdue && due.soon && "text-warning",
             !due.overdue && !due.soon && "text-muted-foreground",
           )}
         >

@@ -80,7 +80,7 @@ export function ContactList({ initialSearch = "" }: Props = {}) {
     <div className="space-y-4">
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Contacts</h1>
+          <h1 className="text-2xl font-extrabold tracking-[-0.03em]">Contacts</h1>
           <p className="text-sm text-muted-foreground">
             {contacts.length} {contacts.length === 1 ? "contact" : "contacts"}
           </p>
@@ -156,11 +156,7 @@ export function ContactList({ initialSearch = "" }: Props = {}) {
               {filtered.map((c) => (
                 <TableRow key={c.id}>
                   <TableCell className="font-medium">
-                    <Link
-                      to="/contacts/$id"
-                      params={{ id: c.id }}
-                      className="hover:underline"
-                    >
+                    <Link to="/contacts/$id" params={{ id: c.id }} className="hover:underline">
                       {c.first_name} {c.last_name ?? ""}
                     </Link>
                   </TableCell>
@@ -267,4 +263,3 @@ export function ContactList({ initialSearch = "" }: Props = {}) {
     </div>
   );
 }
-

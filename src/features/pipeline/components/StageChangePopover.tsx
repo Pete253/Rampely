@@ -64,7 +64,11 @@ export function StageChangePopover({ pipelineId, currentStage, dealId, onChanged
             variant="secondary"
             style={
               currentStage?.color
-                ? { backgroundColor: `${currentStage.color}20`, color: currentStage.color, borderColor: `${currentStage.color}40` }
+                ? {
+                    backgroundColor: `${currentStage.color}20`,
+                    color: currentStage.color,
+                    borderColor: `${currentStage.color}40`,
+                  }
                 : undefined
             }
             className="border"

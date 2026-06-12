@@ -1,24 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, Outlet, useMatches, useNavigate, useSearch } from "@tanstack/react-router";
-import {
-  DndContext,
-  PointerSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from "@dnd-kit/core";
+import { DndContext, PointerSensor, useSensor, useSensors, type DragEndEvent } from "@dnd-kit/core";
 import { toast } from "sonner";
 import { KanbanSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/shared/components/EmptyState";
 import { usePendingCreate } from "@/shared/contexts/PendingCreateContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/shared/lib/supabase";
 import { useAuth } from "@/shared/hooks/useAuth";
 import { useWorkspace } from "@/shared/hooks/useWorkspace";
@@ -32,7 +21,10 @@ import type { PipelineStage } from "@/shared/lib/types";
 
 export function PipelineBoard() {
   const matches = useMatches();
-  const hasChildRoute = matches.some((m) => m.routeId !== "/_authenticated/pipeline" && m.routeId.startsWith("/_authenticated/pipeline/"));
+  const hasChildRoute = matches.some(
+    (m) =>
+      m.routeId !== "/_authenticated/pipeline" && m.routeId.startsWith("/_authenticated/pipeline/"),
+  );
   if (hasChildRoute) {
     return <Outlet />;
   }
@@ -50,7 +42,15 @@ function PipelineBoardInner() {
   const selectedPipelineId = search.pipelineId || defaultPipeline?.id || "";
 
   const { stages, loading: stagesLoading } = usePipelineStages(selectedPipelineId || undefined);
-  const { deals, loading: dealsLoading, create, update, remove, moveStage, reorderColumn } = useDeals({
+  const {
+    deals,
+    loading: dealsLoading,
+    create,
+    update,
+    remove,
+    moveStage,
+    reorderColumn,
+  } = useDeals({
     pipelineId: selectedPipelineId || undefined,
   });
 
@@ -115,9 +115,7 @@ function PipelineBoardInner() {
     })();
   }, [workspace, deals]);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   // Apply client-side filters
   const filteredDeals = useMemo(() => {
@@ -268,9 +266,7 @@ function PipelineBoardInner() {
       <PipelineHeader
         pipelines={pipelines}
         selectedPipelineId={selectedPipelineId}
-        onSelectPipeline={(id) =>
-          navigate({ search: (prev: any) => ({ ...prev, pipelineId: id }) })
-        }
+        onSelectPipeline={(id) => navigate({ search: (prev) => ({ ...prev, pipelineId: id }) })}
         stages={stages}
         stagesByPipeline={stagesByPipeline}
         deals={deals}
@@ -283,7 +279,7 @@ function PipelineBoardInner() {
         value={{ owner: search.owner, minValue: search.minValue, maxValue: search.maxValue }}
         onChange={(next) =>
           navigate({
-            search: (prev: any) => ({
+            search: (prev) => ({
               ...prev,
               owner: next.owner,
               minValue: next.minValue,
@@ -303,7 +299,11 @@ function PipelineBoardInner() {
         <div className="rounded-lg border border-dashed p-12 text-center">
           <p className="text-sm text-muted-foreground">
             This pipeline has no stages yet.{" "}
-            <Link to="/pipeline/settings" search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }} className="text-primary underline">
+            <Link
+              to="/pipeline/settings"
+              search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}
+              className="text-primary underline"
+            >
               Configure stages
             </Link>
             .

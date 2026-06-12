@@ -36,8 +36,7 @@ export function EventForm({ initial, onSubmit, onCancel, submitLabel = "Create e
   const [eventType, setEventType] = useState<EventType>(initial?.event_type ?? "meeting");
   const [start, setStart] = useState(toLocalInput(initial?.start_at) || toLocalInput(new Date()));
   const [end, setEnd] = useState(
-    toLocalInput(initial?.end_at) ||
-      toLocalInput(new Date(Date.now() + 60 * 60 * 1000)),
+    toLocalInput(initial?.end_at) || toLocalInput(new Date(Date.now() + 60 * 60 * 1000)),
   );
   const [location, setLocation] = useState(initial?.location ?? "");
   const [videoUrl, setVideoUrl] = useState(initial?.video_url ?? "");

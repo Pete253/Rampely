@@ -23,7 +23,7 @@ export function EntityTasksTab({ dealId, contactId, companyId }: Props) {
   });
   const [createOpen, setCreateOpen] = useState(false);
   const [active, setActive] = useState<TaskRecord | null>(null);
-  const activeFresh = active ? tasks.find((t) => t.id === active.id) ?? active : null;
+  const activeFresh = active ? (tasks.find((t) => t.id === active.id) ?? active) : null;
 
   return (
     <div className="space-y-3">

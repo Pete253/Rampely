@@ -16,7 +16,7 @@ interface Props {
 export function ReportsHeader(props: Props) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
-      <h1 className="text-2xl font-semibold tracking-tight">Reports</h1>
+      <h1 className="text-2xl font-extrabold tracking-[-0.03em]">Reports</h1>
       <div className="flex items-center gap-2 flex-wrap">
         <DateRangeSelector
           preset={props.preset}

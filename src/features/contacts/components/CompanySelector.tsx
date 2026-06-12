@@ -14,12 +14,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import type { Company } from "@/shared/lib/types";
 import { CompanyForm } from "./CompanyForm";
@@ -74,9 +69,7 @@ export function CompanySelector({ value, onChange, disabled }: Props) {
       throw error ?? new Error("Failed to create company");
     }
     setCompanies((prev) =>
-      [...prev, { id: data.id, name: data.name }].sort((a, b) =>
-        a.name.localeCompare(b.name),
-      ),
+      [...prev, { id: data.id, name: data.name }].sort((a, b) => a.name.localeCompare(b.name)),
     );
     onChange(data.id);
     setCreateOpen(false);
@@ -117,9 +110,7 @@ export function CompanySelector({ value, onChange, disabled }: Props) {
                     setOpen(false);
                   }}
                 >
-                  <Check
-                    className={cn("mr-2 h-4 w-4", !value ? "opacity-100" : "opacity-0")}
-                  />
+                  <Check className={cn("mr-2 h-4 w-4", !value ? "opacity-100" : "opacity-0")} />
                   <span className="text-muted-foreground">No company</span>
                 </CommandItem>
                 {companies.map((c) => (
@@ -132,10 +123,7 @@ export function CompanySelector({ value, onChange, disabled }: Props) {
                     }}
                   >
                     <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === c.id ? "opacity-100" : "opacity-0",
-                      )}
+                      className={cn("mr-2 h-4 w-4", value === c.id ? "opacity-100" : "opacity-0")}
                     />
                     {c.name}
                   </CommandItem>
@@ -158,10 +146,7 @@ export function CompanySelector({ value, onChange, disabled }: Props) {
       </Popover>
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen} modal>
-        <DialogContent
-          className="max-w-lg"
-          onOpenAutoFocus={(e) => e.preventDefault()}
-        >
+        <DialogContent className="max-w-lg" onOpenAutoFocus={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle>New company</DialogTitle>
           </DialogHeader>

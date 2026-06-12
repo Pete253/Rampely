@@ -25,7 +25,10 @@ import type { Activity } from "@/shared/hooks/useActivities";
 
 interface Props {
   activity: Activity;
-  onUpdate: (id: string, patch: { subject?: string | null; body?: string | null }) => Promise<unknown>;
+  onUpdate: (
+    id: string,
+    patch: { subject?: string | null; body?: string | null },
+  ) => Promise<unknown>;
   onDelete: (id: string) => Promise<void>;
 }
 
@@ -92,9 +95,7 @@ export function ActivityItem({ activity, onUpdate, onDelete }: Props) {
           <span>·</span>
           <span>{meta.label}</span>
           <span>·</span>
-          <span>
-            {formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}
-          </span>
+          <span>{formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}</span>
         </div>
 
         {editing ? (
@@ -124,9 +125,7 @@ export function ActivityItem({ activity, onUpdate, onDelete }: Props) {
               <div className="font-semibold leading-tight">{activity.subject}</div>
             )}
             {activity.body && (
-              <div className="whitespace-pre-wrap text-sm text-foreground/90">
-                {activity.body}
-              </div>
+              <div className="whitespace-pre-wrap text-sm text-foreground/90">{activity.body}</div>
             )}
           </>
         )}
@@ -134,12 +133,7 @@ export function ActivityItem({ activity, onUpdate, onDelete }: Props) {
 
       {canEdit && !editing && (
         <div className="absolute right-2 top-2 flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-          <Button
-            size="icon"
-            variant="ghost"
-            className="h-7 w-7"
-            onClick={() => setEditing(true)}
-          >
+          <Button size="icon" variant="ghost" className="h-7 w-7" onClick={() => setEditing(true)}>
             <Pencil className="h-3.5 w-3.5" />
           </Button>
           <AlertDialog>
@@ -151,9 +145,7 @@ export function ActivityItem({ activity, onUpdate, onDelete }: Props) {
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>Delete this activity?</AlertDialogTitle>
-                <AlertDialogDescription>
-                  This action cannot be undone.
-                </AlertDialogDescription>
+                <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>

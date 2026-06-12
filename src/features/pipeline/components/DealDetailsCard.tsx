@@ -22,7 +22,7 @@ function SavedHint({ visible }: { visible: boolean }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 text-[11px] text-emerald-600 transition-opacity",
+        "inline-flex items-center gap-1 text-[11px] text-success transition-opacity",
         visible ? "opacity-100" : "opacity-0",
       )}
     >
@@ -126,10 +126,7 @@ export function DealDetailsCard({ deal, onUpdate }: Props) {
               <Button
                 type="button"
                 variant="outline"
-                className={cn(
-                  "w-full justify-start font-normal",
-                  !date && "text-muted-foreground",
-                )}
+                className={cn("w-full justify-start font-normal", !date && "text-muted-foreground")}
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
                 {date ? format(date, "PPP") : "Pick a date"}

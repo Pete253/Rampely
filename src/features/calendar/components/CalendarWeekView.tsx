@@ -45,15 +45,7 @@ function eventBlockStyle(ev: CalendarEvent): React.CSSProperties {
   return { top: `${top}px`, height: `${height}px` };
 }
 
-function DroppableSlot({
-  day,
-  hour,
-  onClick,
-}: {
-  day: Date;
-  hour: number;
-  onClick: () => void;
-}) {
+function DroppableSlot({ day, hour, onClick }: { day: Date; hour: number; onClick: () => void }) {
   const id = `slot:${format(day, "yyyy-MM-dd")}:${hour}`;
   const { setNodeRef, isOver } = useDroppable({ id, data: { day: day.toISOString(), hour } });
   return (
@@ -142,16 +134,9 @@ export function CalendarWeekView({
           {days.map((day) => {
             const items = allOverlays.filter((it) => isSameLocalDay(it.date, day));
             return (
-              <div
-                key={day.toISOString()}
-                className="min-h-[44px] border-l p-1 space-y-0.5"
-              >
+              <div key={day.toISOString()} className="min-h-[44px] border-l p-1 space-y-0.5">
                 {items.slice(0, 3).map((it) => (
-                  <CalendarOverlayPill
-                    key={it.id}
-                    item={it}
-                    onClick={(i) => onOverlayClick?.(i)}
-                  />
+                  <CalendarOverlayPill key={it.id} item={it} onClick={(i) => onOverlayClick?.(i)} />
                 ))}
                 {items.length > 3 && (
                   <div className="text-[10px] text-muted-foreground px-1">

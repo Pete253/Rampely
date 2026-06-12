@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Check, ChevronsUpDown, Plus, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useWorkspace } from "@/shared/hooks/useWorkspace";
 import { useUserWorkspaces } from "../hooks/useUserWorkspaces";
 import { CreateWorkspaceDialog } from "./CreateWorkspaceDialog";
@@ -30,10 +37,7 @@ export function WorkspaceSwitcher({ collapsed }: Props) {
 
   // Always render the dropdown so "Create new workspace" stays discoverable,
   // even when the user only belongs to a single workspace.
-  const switcherEntries =
-    entries.length > 0
-      ? entries
-      : [{ workspace, role: "owner" as const }];
+  const switcherEntries = entries.length > 0 ? entries : [{ workspace, role: "owner" as const }];
 
   return (
     <>
@@ -60,7 +64,11 @@ export function WorkspaceSwitcher({ collapsed }: Props) {
         <DropdownMenuContent align="start" className="w-64">
           <DropdownMenuLabel>Workspaces</DropdownMenuLabel>
           {switcherEntries.map(({ workspace: ws, role }) => (
-            <DropdownMenuItem key={ws.id} onClick={() => handleSwitch(ws.id)} className="flex items-center gap-2">
+            <DropdownMenuItem
+              key={ws.id}
+              onClick={() => handleSwitch(ws.id)}
+              className="flex items-center gap-2"
+            >
               <div className="min-w-0 flex-1">
                 <div className="truncate text-sm font-medium">{ws.name}</div>
                 <div className="truncate text-xs text-muted-foreground capitalize">{role}</div>

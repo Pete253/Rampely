@@ -103,7 +103,7 @@ export function DealContactsCard({ deal, onAdd, onRemove, onSetPrimary }: Props)
                       <Star
                         className={
                           dc.is_primary
-                            ? "h-3.5 w-3.5 fill-amber-400 text-amber-500"
+                            ? "h-3.5 w-3.5 fill-warning text-warning"
                             : "h-3.5 w-3.5 text-muted-foreground"
                         }
                       />

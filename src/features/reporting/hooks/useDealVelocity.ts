@@ -37,14 +37,13 @@ export function useDealVelocity({ from, to }: { from: Date; to: Date }) {
       const map = new Map<string, VelocityPoint>();
       for (const r of (rows ?? []) as VelocityRow[]) {
         const key = r.week_start;
-        const existing =
-          map.get(key) ?? {
-            week_start: key,
-            won_count: 0,
-            won_avg_days: null,
-            lost_count: 0,
-            lost_avg_days: null,
-          };
+        const existing = map.get(key) ?? {
+          week_start: key,
+          won_count: 0,
+          won_avg_days: null,
+          lost_count: 0,
+          lost_avg_days: null,
+        };
         if (r.status === "won") {
           existing.won_count = Number(r.deals_count);
           existing.won_avg_days = Number(r.avg_days);

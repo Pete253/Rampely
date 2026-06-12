@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,11 +27,17 @@ export function CreateWorkspaceDialog({ open, onOpenChange }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = name.trim();
-    if (!trimmed) { toast.error("Workspace name required"); return; }
+    if (!trimmed) {
+      toast.error("Workspace name required");
+      return;
+    }
     setSubmitting(true);
     const { data, error } = await supabase.rpc("create_workspace", { _name: trimmed });
     setSubmitting(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success(`Workspace "${trimmed}" created`);
     await refresh();
     if (data) setActiveWorkspace(data as unknown as string);
@@ -44,11 +57,21 @@ export function CreateWorkspaceDialog({ open, onOpenChange }: Props) {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="ws-name">Workspace name</Label>
-            <Input id="ws-name" autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Acme Sales" />
+            <Input
+              id="ws-name"
+              autoFocus
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Acme Sales"
+            />
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button type="submit" disabled={submitting}>{submitting ? "Creating…" : "Create workspace"}</Button>
+            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+              Cancel
+            </Button>
+            <Button type="submit" disabled={submitting}>
+              {submitting ? "Creating…" : "Create workspace"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

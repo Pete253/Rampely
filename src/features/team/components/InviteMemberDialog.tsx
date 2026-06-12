@@ -1,11 +1,24 @@
 import { useState } from "react";
 import { toast } from "sonner";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useInvitations } from "../hooks/useInvitations";
 
 interface Props {
@@ -57,7 +70,13 @@ export function InviteMemberDialog({ open, onOpenChange }: Props) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={(o) => { if (!o) reset(); onOpenChange(o); }}>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        if (!o) reset();
+        onOpenChange(o);
+      }}
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Invite a teammate</DialogTitle>
@@ -72,13 +91,14 @@ export function InviteMemberDialog({ open, onOpenChange }: Props) {
               required
               autoFocus
               value={email}
-              onChange={(e) => { setEmail(e.target.value); if (emailError) setEmailError(null); }}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (emailError) setEmailError(null);
+              }}
               placeholder="teammate@company.com"
               aria-invalid={emailError ? true : undefined}
             />
-            {emailError && (
-              <p className="text-sm text-destructive">{emailError}</p>
-            )}
+            {emailError && <p className="text-sm text-destructive">{emailError}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="invite-role">Role</Label>

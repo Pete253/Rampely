@@ -36,7 +36,17 @@ function buildEmailHtml(opts: {
   variant: "first" | "resend" | "reinvite";
   sentOnDate: string;
 }): string {
-  const { workspaceName, inviterName, role, message, acceptUrl, expiryDate, logoUrl, variant, sentOnDate } = opts;
+  const {
+    workspaceName,
+    inviterName,
+    role,
+    message,
+    acceptUrl,
+    expiryDate,
+    logoUrl,
+    variant,
+    sentOnDate,
+  } = opts;
   const messageBlock = message
     ? `<div style="margin:0 0 24px;padding:16px 20px;background:#f8fafc;border-left:3px solid #6366f1;border-radius:6px;color:#334155;font-size:14px;line-height:1.6;font-style:italic;">"${escapeHtml(message)}"</div>`
     : "";

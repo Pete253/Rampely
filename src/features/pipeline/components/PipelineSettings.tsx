@@ -31,8 +31,7 @@ import { usePipelines } from "../hooks/usePipelines";
 import { StageEditor } from "./StageEditor";
 
 export function PipelineSettings() {
-  const { pipelines, loading, createPipeline, updatePipeline, deletePipeline } =
-    usePipelines();
+  const { pipelines, loading, createPipeline, updatePipeline, deletePipeline } = usePipelines();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const [newName, setNewName] = useState("");
@@ -65,10 +64,14 @@ export function PipelineSettings() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <Link to="/pipeline" search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }} className="text-xs text-muted-foreground hover:underline inline-flex items-center gap-1">
+          <Link
+            to="/pipeline"
+            search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}
+            className="text-xs text-muted-foreground hover:underline inline-flex items-center gap-1"
+          >
             <ArrowLeft className="h-3 w-3" /> Back to board
           </Link>
-          <h1 className="text-2xl font-semibold tracking-tight">Pipeline Settings</h1>
+          <h1 className="text-2xl font-extrabold tracking-[-0.03em]">Pipeline Settings</h1>
         </div>
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <Button size="sm" onClick={() => setCreateOpen(true)}>
@@ -116,9 +119,7 @@ export function PipelineSettings() {
           {loading ? (
             <Skeleton className="h-32 w-full" />
           ) : pipelines.length === 0 ? (
-            <div className="px-2 py-4 text-sm text-muted-foreground">
-              No pipelines yet.
-            </div>
+            <div className="px-2 py-4 text-sm text-muted-foreground">No pipelines yet.</div>
           ) : (
             <div className="space-y-1">
               {pipelines.map((p) => (
@@ -128,13 +129,11 @@ export function PipelineSettings() {
                   onClick={() => setSelectedId(p.id)}
                   className={cn(
                     "flex w-full items-center justify-between rounded-md px-2 py-2 text-left text-sm transition-colors",
-                    selectedId === p.id
-                      ? "bg-accent text-accent-foreground"
-                      : "hover:bg-muted",
+                    selectedId === p.id ? "bg-accent text-accent-foreground" : "hover:bg-muted",
                   )}
                 >
                   <span className="truncate">{p.name}</span>
-                  {p.is_default && <Star className="h-3.5 w-3.5 text-amber-500" />}
+                  {p.is_default && <Star className="h-3.5 w-3.5 text-warning" />}
                 </button>
               ))}
             </div>

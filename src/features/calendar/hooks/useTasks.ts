@@ -78,8 +78,10 @@ export function useTasks(filters: TaskFilters = {}) {
     if (filters.dealId) q = q.eq("deal_id", filters.dealId);
     if (filters.contactId) q = q.eq("contact_id", filters.contactId);
     if (filters.companyId) q = q.eq("company_id", filters.companyId);
-    if (filters.assignees && filters.assignees.length > 0) q = q.in("assignee_id", filters.assignees);
-    if (filters.priorities && filters.priorities.length > 0) q = q.in("priority", filters.priorities);
+    if (filters.assignees && filters.assignees.length > 0)
+      q = q.in("assignee_id", filters.assignees);
+    if (filters.priorities && filters.priorities.length > 0)
+      q = q.in("priority", filters.priorities);
     if (filters.statuses && filters.statuses.length > 0) q = q.in("status", filters.statuses);
 
     if (filters.dueRange === "today") {
@@ -195,7 +197,10 @@ export function useTasks(filters: TaskFilters = {}) {
 
   const update = useCallback(
     async (id: string, patch: Partial<CreateTaskInput>) => {
-      const { error } = await supabase.from("tasks" as never).update(patch as never).eq("id", id);
+      const { error } = await supabase
+        .from("tasks" as never)
+        .update(patch as never)
+        .eq("id", id);
       if (error) throw error;
       await refresh();
     },
@@ -203,7 +208,10 @@ export function useTasks(filters: TaskFilters = {}) {
   );
 
   const remove = useCallback(async (id: string) => {
-    const { error } = await supabase.from("tasks" as never).delete().eq("id", id);
+    const { error } = await supabase
+      .from("tasks" as never)
+      .delete()
+      .eq("id", id);
     if (error) throw error;
     setTasks((prev) => prev.filter((t) => t.id !== id));
   }, []);

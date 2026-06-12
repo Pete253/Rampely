@@ -1,34 +1,39 @@
-// Recharts theme tied to CSS theme tokens. Recharts needs concrete color values
-// (it doesn't compute CSS vars correctly inside SVG fills/strokes), so we expose
-// HSL helper colors mapped to the design system.
+// Recharts theme for the dark app shell. Recharts needs concrete color values
+// (it doesn't compute CSS vars correctly inside SVG fills/strokes), so the
+// Rampely design-system hex values are inlined here.
 
 export const chartTheme = {
   // Primary brand color used for default series
-  primary: "hsl(var(--primary, 222 47% 11%))",
-  muted: "hsl(var(--muted-foreground, 215 16% 47%))",
-  grid: "hsl(var(--border, 220 13% 91%))",
-  axis: "hsl(var(--muted-foreground, 215 16% 47%))",
-  // Semantic chart colors — kept distinct from theme accents for legibility
-  won: "#10b981",
-  lost: "#ef4444",
-  created: "#6366f1",
+  primary: "#4759E8",
+  muted: "rgba(255,255,255,0.4)",
+  grid: "rgba(255,255,255,0.07)",
+  axis: "rgba(255,255,255,0.4)",
+  // Semantic chart colors
+  won: "#28C840",
+  lost: "#FF5F57",
+  created: "#4759E8",
   fontSize: 11,
-  fontFamily: "Inter, system-ui, sans-serif",
+  fontFamily: "Manrope, system-ui, sans-serif",
 } as const;
 
-// Activity-type donut palette (5 types).
+// Activity-type donut palette (5 types) — blue scale + semantic accents.
 export const ACTIVITY_COLORS: Record<string, string> = {
-  call: "#06b6d4",
-  email: "#6366f1",
-  meeting: "#f59e0b",
-  note: "#94a3b8",
-  task: "#10b981",
+  call: "#6B7FFF",
+  email: "#4759E8",
+  meeting: "#FEBC2E",
+  note: "#8B99F0",
+  task: "#28C840",
 };
 
-// Tooltip default style
+// Hover cursor (bar/line highlight) — subtle white wash instead of recharts' grey
+export const tooltipCursor = { fill: "rgba(255,255,255,0.06)" } as const;
+
+// Tooltip default style — elevated dark surface
 export const tooltipStyle = {
-  background: "hsl(var(--popover, 0 0% 100%))",
-  border: "1px solid hsl(var(--border, 220 13% 91%))",
-  borderRadius: 6,
+  background: "#1A1D40",
+  border: "1px solid rgba(255,255,255,0.12)",
+  borderRadius: 10,
   fontSize: 12,
+  color: "#FFFFFF",
+  fontFamily: "Manrope, system-ui, sans-serif",
 };

@@ -11,9 +11,7 @@ const Ctx = createContext<PendingCreateContextValue | undefined>(undefined);
 
 export function PendingCreateProvider({ children }: { children: ReactNode }) {
   const [pendingCreate, setPendingCreate] = useState<CreateEntity | null>(null);
-  return (
-    <Ctx.Provider value={{ pendingCreate, setPendingCreate }}>{children}</Ctx.Provider>
-  );
+  return <Ctx.Provider value={{ pendingCreate, setPendingCreate }}>{children}</Ctx.Provider>;
 }
 
 export function usePendingCreate() {

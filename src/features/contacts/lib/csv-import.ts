@@ -6,13 +6,7 @@ export type ContactField =
   | "title"
   | "company_name";
 
-export type CompanyField =
-  | "name"
-  | "cvr"
-  | "website"
-  | "industry"
-  | "employees"
-  | "address";
+export type CompanyField = "name" | "cvr" | "website" | "industry" | "employees" | "address";
 
 export type FieldKey = ContactField | CompanyField;
 
@@ -94,9 +88,7 @@ export function mapRow<T extends FieldKey>(
     const v = (raw[header] ?? "").trim();
     if (v) values[target] = v;
   }
-  const missing = fields
-    .filter((f) => f.required && !values[f.key])
-    .map((f) => f.label);
+  const missing = fields.filter((f) => f.required && !values[f.key]).map((f) => f.label);
   return { values: values as Partial<Record<T, string>>, missing };
 }
 

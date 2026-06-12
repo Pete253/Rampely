@@ -52,9 +52,7 @@ function mapRaw(raw: RawCvr): CvrCompany | null {
   const street = raw.address ?? "";
   const zip = raw.zipcode != null ? String(raw.zipcode) : "";
   const city = raw.city ?? "";
-  const fullAddress = [street, [zip, city].filter(Boolean).join(" ")]
-    .filter(Boolean)
-    .join(", ");
+  const fullAddress = [street, [zip, city].filter(Boolean).join(" ")].filter(Boolean).join(", ");
 
   let status: string | undefined;
   if (Array.isArray(raw.lifecycle) && raw.lifecycle.length > 0) {
@@ -106,7 +104,10 @@ Deno.serve(async (req) => {
     global: { headers: { Authorization: authHeader } },
   });
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
   if (authError || !user) {
     return json({ ok: false, error: "Unauthorized" }, 401);
   }
@@ -151,11 +152,14 @@ Deno.serve(async (req) => {
       },
     });
   } catch (e) {
-    return json({
-      ok: false,
-      error: `Network error contacting CVR registry: ${e instanceof Error ? e.message : String(e)}`,
-      statusCode: 502,
-    }, 502);
+    return json(
+      {
+        ok: false,
+        error: `Network error contacting CVR registry: ${e instanceof Error ? e.message : String(e)}`,
+        statusCode: 502,
+      },
+      502,
+    );
   }
 
   if (res.status === 404) {
@@ -167,19 +171,25 @@ Deno.serve(async (req) => {
   }
 
   if (res.status === 429) {
-    return json({
-      ok: false,
-      error: "CVR registry rate limit reached. Try again in a moment.",
-      statusCode: 429,
-    }, 429);
+    return json(
+      {
+        ok: false,
+        error: "CVR registry rate limit reached. Try again in a moment.",
+        statusCode: 429,
+      },
+      429,
+    );
   }
 
   if (!res.ok) {
-    return json({
-      ok: false,
-      error: `CVR registry error (HTTP ${res.status}).`,
-      statusCode: res.status,
-    }, 502);
+    return json(
+      {
+        ok: false,
+        error: `CVR registry error (HTTP ${res.status}).`,
+        statusCode: res.status,
+      },
+      502,
+    );
   }
 
   const raw = (await res.json()) as RawCvr;
@@ -188,11 +198,14 @@ Deno.serve(async (req) => {
     if (raw.error === "NOT_FOUND") {
       return json({ ok: true, data: type === "name" ? [] : null });
     }
-    return json({
-      ok: false,
-      error: `CVR registry error: ${raw.error}`,
-      statusCode: 500,
-    }, 502);
+    return json(
+      {
+        ok: false,
+        error: `CVR registry error: ${raw.error}`,
+        statusCode: 500,
+      },
+      502,
+    );
   }
 
   const mapped = mapRaw(raw);

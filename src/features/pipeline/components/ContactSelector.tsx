@@ -14,12 +14,7 @@ import {
   CommandSeparator,
 } from "@/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { ContactForm } from "@/features/contacts/components/ContactForm";
 import type { ContactInput } from "@/features/contacts/hooks/useContacts";
@@ -110,11 +105,7 @@ export function ContactSelector({ value, onChange, companyId, disabled }: Props)
         </PopoverTrigger>
         <PopoverContent className="w-[--radix-popover-trigger-width] p-0" align="start">
           <Command>
-            <CommandInput
-              placeholder="Search contacts…"
-              value={search}
-              onValueChange={setSearch}
-            />
+            <CommandInput placeholder="Search contacts…" value={search} onValueChange={setSearch} />
             <CommandList>
               <CommandEmpty>No contacts found.</CommandEmpty>
               <CommandGroup>
@@ -138,10 +129,7 @@ export function ContactSelector({ value, onChange, companyId, disabled }: Props)
                     }}
                   >
                     <Check
-                      className={cn(
-                        "mr-2 h-4 w-4",
-                        value === c.id ? "opacity-100" : "opacity-0",
-                      )}
+                      className={cn("mr-2 h-4 w-4", value === c.id ? "opacity-100" : "opacity-0")}
                     />
                     {label(c)}
                   </CommandItem>
@@ -164,10 +152,7 @@ export function ContactSelector({ value, onChange, companyId, disabled }: Props)
       </Popover>
 
       <Dialog open={createOpen} onOpenChange={setCreateOpen} modal>
-        <DialogContent
-          className="max-w-lg"
-          onOpenAutoFocus={(e) => e.preventDefault()}
-        >
+        <DialogContent className="max-w-lg" onOpenAutoFocus={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle>New contact</DialogTitle>
           </DialogHeader>

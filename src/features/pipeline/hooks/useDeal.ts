@@ -54,9 +54,7 @@ export function useDeal(dealId: string | undefined) {
 
     const { data, error } = await supabase
       .from("deals")
-      .select(
-        "*, stage:pipeline_stages(*), pipeline:pipelines(*), company:companies(*)",
-      )
+      .select("*, stage:pipeline_stages(*), pipeline:pipelines(*), company:companies(*)")
       .eq("id", dealId)
       .eq("workspace_id", workspace.id)
       .maybeSingle();

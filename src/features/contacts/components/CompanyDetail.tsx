@@ -65,7 +65,11 @@ export function CompanyDetail({ id }: { id: string }) {
   const { businessRegistry } = useCountryFeatures();
   const cvrEnabled = businessRegistry?.id === "cvr";
   const { company, loading, update, refresh, remove } = useCompany(id);
-  const { contacts, create: createContact, loading: contactsLoading } = useContacts({
+  const {
+    contacts,
+    create: createContact,
+    loading: contactsLoading,
+  } = useContacts({
     companyId: id,
   });
   const [addContactOpen, setAddContactOpen] = useState(false);
@@ -90,7 +94,10 @@ export function CompanyDetail({ id }: { id: string }) {
     return (
       <div className="space-y-3">
         <p className="text-muted-foreground">Company not found.</p>
-        <Button variant="outline" onClick={() => navigate({ to: "/companies", search: { search: "" } })}>
+        <Button
+          variant="outline"
+          onClick={() => navigate({ to: "/companies", search: { search: "" } })}
+        >
           <ArrowLeft className="mr-1 h-4 w-4" /> Back to companies
         </Button>
       </div>
@@ -162,27 +169,17 @@ export function CompanyDetail({ id }: { id: string }) {
 
   return (
     <div className="space-y-6">
-      <Breadcrumbs
-        items={[
-          { label: "Companies", to: "/companies" },
-          { label: company.name },
-        ]}
-      />
+      <Breadcrumbs items={[{ label: "Companies", to: "/companies" }, { label: company.name }]} />
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-semibold tracking-tight">{company.name}</h1>
+            <h1 className="text-2xl font-extrabold tracking-[-0.03em]">{company.name}</h1>
             {company.industry && <Badge variant="secondary">{company.industry}</Badge>}
           </div>
         </div>
         <div className="flex items-center gap-2">
           {cvrEnabled && company.cvr && /^\d{8}$/.test(company.cvr) && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRefreshCvr}
-              disabled={refreshing}
-            >
+            <Button variant="outline" size="sm" onClick={handleRefreshCvr} disabled={refreshing}>
               {refreshing ? (
                 <Loader2 className="mr-1 h-4 w-4 animate-spin" />
               ) : (
@@ -253,11 +250,7 @@ export function CompanyDetail({ id }: { id: string }) {
             value={company.industry}
             onSave={(v) => update({ industry: v })}
           />
-          <InlineField
-            label="CVR"
-            value={company.cvr}
-            onSave={(v) => update({ cvr: v })}
-          />
+          <InlineField label="CVR" value={company.cvr} onSave={(v) => update({ cvr: v })} />
           <InlineField
             label="Website"
             value={company.website}
@@ -290,10 +283,7 @@ export function CompanyDetail({ id }: { id: string }) {
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
               <Stat label="Contacts" value={String(contacts.length)} />
               <Stat label="Employees" value={company.employees?.toString() ?? "—"} />
-              <Stat
-                label="Created"
-                value={new Date(company.created_at).toLocaleDateString()}
-              />
+              <Stat label="Created" value={new Date(company.created_at).toLocaleDateString()} />
             </div>
           </TabsContent>
           <TabsContent value="contacts" className="space-y-3">
@@ -396,9 +386,7 @@ export function CompanyDetail({ id }: { id: string }) {
                 <div className="min-w-0 flex-1">
                   <div className="font-medium">{DIFF_LABELS[row.field]}</div>
                   <div className="mt-1 grid gap-1 text-xs">
-                    <div className="text-muted-foreground line-through">
-                      {row.current || "—"}
-                    </div>
+                    <div className="text-muted-foreground line-through">{row.current || "—"}</div>
                     <div className="text-foreground">→ {row.next}</div>
                   </div>
                 </div>
@@ -410,7 +398,9 @@ export function CompanyDetail({ id }: { id: string }) {
               Cancel
             </Button>
             <Button onClick={applyDiff} disabled={applying || selected.size === 0}>
-              {applying ? "Applying…" : `Apply ${selected.size} change${selected.size === 1 ? "" : "s"}`}
+              {applying
+                ? "Applying…"
+                : `Apply ${selected.size} change${selected.size === 1 ? "" : "s"}`}
             </Button>
           </div>
         </DialogContent>
@@ -420,14 +410,28 @@ export function CompanyDetail({ id }: { id: string }) {
 }
 
 function computeDiff(
-  current: { name: string; address: string | null; industry: string | null; employees: number | null; website: string | null },
+  current: {
+    name: string;
+    address: string | null;
+    industry: string | null;
+    employees: number | null;
+    website: string | null;
+  },
   next: CvrCompany,
 ): { field: DiffField; current: string; next: string }[] {
   const out: { field: DiffField; current: string; next: string }[] = [];
-  const candidates: { field: DiffField; cur: string | number | null; nx: string | number | undefined | null }[] = [
+  const candidates: {
+    field: DiffField;
+    cur: string | number | null;
+    nx: string | number | undefined | null;
+  }[] = [
     { field: "name", cur: current.name, nx: next.name },
     { field: "address", cur: current.address, nx: next.address },
-    { field: "industry", cur: current.industry, nx: next.industryDesc ?? next.industryCode ?? null },
+    {
+      field: "industry",
+      cur: current.industry,
+      nx: next.industryDesc ?? next.industryCode ?? null,
+    },
     { field: "employees", cur: current.employees, nx: next.employees ?? null },
     { field: "website", cur: current.website, nx: next.website ?? null },
   ];
@@ -445,7 +449,7 @@ function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border bg-card p-4">
       <div className="text-xs text-muted-foreground">{label}</div>
-      <div className="mt-1 text-xl font-semibold">{value}</div>
+      <div className="mt-1 text-xl font-extrabold tracking-[-0.02em]">{value}</div>
     </div>
   );
 }

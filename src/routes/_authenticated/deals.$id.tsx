@@ -10,7 +10,12 @@ export const Route = createFileRoute("/_authenticated/deals/$id")({
     <div className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed p-16 text-center">
       <h2 className="text-lg font-semibold">Deal not found</h2>
       <Button asChild>
-        <Link to="/pipeline" search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}>Back to Pipeline</Link>
+        <Link
+          to="/pipeline"
+          search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}
+        >
+          Back to Pipeline
+        </Link>
       </Button>
     </div>
   ),
@@ -37,7 +42,12 @@ function DealErrorComponent({ error, reset }: { error: Error; reset: () => void 
           Retry
         </Button>
         <Button variant="outline" asChild>
-          <Link to="/pipeline" search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}>Back to Pipeline</Link>
+          <Link
+            to="/pipeline"
+            search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}
+          >
+            Back to Pipeline
+          </Link>
         </Button>
       </div>
     </div>

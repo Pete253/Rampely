@@ -24,7 +24,9 @@ export function useActivityBreakdown({ from, to }: { from: Date; to: Date }) {
         _to: to.toISOString(),
       });
       if (err) throw err;
-      setData((rows ?? []).map((r: ActivityBreakdownRow) => ({ type: r.type, count: Number(r.count) })));
+      setData(
+        (rows ?? []).map((r: ActivityBreakdownRow) => ({ type: r.type, count: Number(r.count) })),
+      );
     } catch (e) {
       setError((e as Error).message ?? "Failed to load activity breakdown");
     } finally {

@@ -44,7 +44,9 @@ export function useInvitations() {
     // Step 1: fetch invitations without embedded join
     const { data: invites, error } = await supabase
       .from("workspace_invitations")
-      .select("id, workspace_id, email, role, token, invited_by, message, expires_at, accepted_at, created_at")
+      .select(
+        "id, workspace_id, email, role, token, invited_by, message, expires_at, accepted_at, created_at",
+      )
       .eq("workspace_id", workspace.id)
       .is("accepted_at", null)
       .gt("expires_at", new Date().toISOString())
@@ -65,7 +67,9 @@ export function useInvitations() {
         .from("profiles")
         .select("id, full_name, email")
         .in("id", inviterIds);
-      profileMap = new Map((profiles ?? []).map((p) => [p.id, { full_name: p.full_name, email: p.email }]));
+      profileMap = new Map(
+        (profiles ?? []).map((p) => [p.id, { full_name: p.full_name, email: p.email }]),
+      );
     }
 
     // Step 3: fetch member emails via two-step pattern (members → profiles)
@@ -113,7 +117,9 @@ export function useInvitations() {
   }, [load]);
 
   const sendEmail = async (invitationId: string, isResend = false) => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     const { error } = await supabase.functions.invoke("send-invitation-email", {
       body: { invitationId, isResend },
       headers: session?.access_token
@@ -204,5 +210,13 @@ export function useInvitations() {
     await sendEmail(id, true);
   };
 
-  return { invitations, memberEmails, loading, refresh: load, createInvitation, cancelInvitation, resendInvitation };
+  return {
+    invitations,
+    memberEmails,
+    loading,
+    refresh: load,
+    createInvitation,
+    cancelInvitation,
+    resendInvitation,
+  };
 }

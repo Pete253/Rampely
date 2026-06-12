@@ -29,10 +29,7 @@ export function useCompanies() {
         .select("*")
         .eq("workspace_id", workspace.id)
         .order("created_at", { ascending: false }),
-      supabase
-        .from("contacts")
-        .select("id, company_id")
-        .eq("workspace_id", workspace.id),
+      supabase.from("contacts").select("id, company_id").eq("workspace_id", workspace.id),
     ]);
     if (e1 || e2) {
       setError(e1?.message ?? e2?.message ?? "Failed to load companies");

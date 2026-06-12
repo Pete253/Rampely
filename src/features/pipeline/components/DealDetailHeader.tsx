@@ -5,12 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -54,7 +49,10 @@ export function DealDetailHeader({ deal, onUpdate, onRemove, onChanged }: Props)
       const { data } = await supabase
         .from("pipeline_stages")
         .select("*")
-        .in("pipeline_id", pipelines.map((p) => p.id))
+        .in(
+          "pipeline_id",
+          pipelines.map((p) => p.id),
+        )
         .order("sort_order", { ascending: true });
       const map: Record<string, PipelineStage[]> = {};
       for (const s of data ?? []) {
@@ -86,7 +84,10 @@ export function DealDetailHeader({ deal, onUpdate, onRemove, onChanged }: Props)
     try {
       await onRemove();
       toast.success("Deal deleted");
-      navigate({ to: "/pipeline", search: { pipelineId: "", owner: [], minValue: undefined, maxValue: undefined } });
+      navigate({
+        to: "/pipeline",
+        search: { pipelineId: "", owner: [], minValue: undefined, maxValue: undefined },
+      });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed to delete");
     }
@@ -116,7 +117,7 @@ export function DealDetailHeader({ deal, onUpdate, onRemove, onChanged }: Props)
                   setEditingTitle(false);
                 }
               }}
-              className="text-2xl font-semibold h-auto py-1"
+              className="h-auto py-1 text-2xl font-extrabold tracking-[-0.03em]"
             />
             <Button size="icon" variant="ghost" onClick={() => void saveTitle()}>
               <Check className="h-4 w-4" />
@@ -135,7 +136,7 @@ export function DealDetailHeader({ deal, onUpdate, onRemove, onChanged }: Props)
         ) : (
           <button
             type="button"
-            className="text-left text-2xl font-semibold leading-tight hover:opacity-70"
+            className="text-left text-2xl font-extrabold leading-tight tracking-[-0.03em] hover:opacity-70"
             onClick={() => setEditingTitle(true)}
             title="Click to edit"
           >

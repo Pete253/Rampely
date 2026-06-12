@@ -53,15 +53,60 @@ export interface QuickActionDef {
 }
 
 export const QUICK_ACTIONS: QuickActionDef[] = [
-  { id: "create-company", label: "Create Company", icon: Plus, kind: "create", create: "company", hint: "N C" },
-  { id: "create-contact", label: "Create Contact", icon: Plus, kind: "create", create: "contact", hint: "N P" },
-  { id: "create-deal", label: "Create Deal", icon: Plus, kind: "create", create: "deal", hint: "N D" },
-  { id: "create-task", label: "Create Task", icon: Plus, kind: "create", create: "task", hint: "N T" },
-  { id: "create-event", label: "Create Event", icon: Plus, kind: "create", create: "event", hint: "N E" },
-  { id: "go-reports", label: "Go to Reports", icon: BarChart3, kind: "navigate", to: "/reports", hint: "G H" },
+  {
+    id: "create-company",
+    label: "Create Company",
+    icon: Plus,
+    kind: "create",
+    create: "company",
+    hint: "N C",
+  },
+  {
+    id: "create-contact",
+    label: "Create Contact",
+    icon: Plus,
+    kind: "create",
+    create: "contact",
+    hint: "N P",
+  },
+  {
+    id: "create-deal",
+    label: "Create Deal",
+    icon: Plus,
+    kind: "create",
+    create: "deal",
+    hint: "N D",
+  },
+  {
+    id: "create-task",
+    label: "Create Task",
+    icon: Plus,
+    kind: "create",
+    create: "task",
+    hint: "N T",
+  },
+  {
+    id: "create-event",
+    label: "Create Event",
+    icon: Plus,
+    kind: "create",
+    create: "event",
+    hint: "N E",
+  },
+  {
+    id: "go-reports",
+    label: "Go to Reports",
+    icon: BarChart3,
+    kind: "navigate",
+    to: "/reports",
+    hint: "G H",
+  },
 ];
 
-export function entityRoute(type: EntityType, id: string): { to: string; params: Record<string, string> } | null {
+export function entityRoute(
+  type: EntityType,
+  id: string,
+): { to: string; params: Record<string, string> } | null {
   switch (type) {
     case "company":
       return { to: "/companies/$id", params: { id } };

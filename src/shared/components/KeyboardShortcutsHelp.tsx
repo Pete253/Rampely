@@ -36,9 +36,7 @@ function Kbd({ children }: { children: React.ReactNode }) {
 function Section({ title, items }: { title: string; items: Shortcut[] }) {
   return (
     <div className="space-y-2">
-      <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {title}
-      </h3>
+      <h3 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{title}</h3>
       <ul className="space-y-1.5">
         {items.map((s) => (
           <li

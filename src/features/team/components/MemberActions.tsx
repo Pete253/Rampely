@@ -2,10 +2,38 @@ import { useState } from "react";
 import { MoreHorizontal } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import type { AppRole } from "@/shared/lib/types";
 import type { MemberRow } from "../hooks/useWorkspaceMembers";
@@ -42,10 +70,8 @@ export function MemberActions({
   const targetIsOwner = member.role === "owner";
 
   // Permission gates
-  const canChangeRole =
-    !isCurrentUser && !targetIsOwner && (isOwnerCaller || isAdminCaller);
-  const canRemove =
-    !isCurrentUser && (isOwnerCaller || (isAdminCaller && !targetIsOwner));
+  const canChangeRole = !isCurrentUser && !targetIsOwner && (isOwnerCaller || isAdminCaller);
+  const canRemove = !isCurrentUser && (isOwnerCaller || (isAdminCaller && !targetIsOwner));
 
   const isOnlyOwner = isCurrentUser && member.role === "owner" && ownerCount === 1;
 
@@ -98,10 +124,7 @@ export function MemberActions({
                   </DropdownMenuItem>
                 </>
               ) : (
-                <DropdownMenuItem
-                  onClick={() => setRemoveOpen(true)}
-                  className="text-destructive"
-                >
+                <DropdownMenuItem onClick={() => setRemoveOpen(true)} className="text-destructive">
                   Leave workspace
                 </DropdownMenuItem>
               )}
@@ -109,9 +132,9 @@ export function MemberActions({
           ) : canRemove ? (
             <>
               {canChangeRole && <DropdownMenuSeparator />}
-            <DropdownMenuItem onClick={() => setRemoveOpen(true)} className="text-destructive">
-              Remove from workspace
-            </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setRemoveOpen(true)} className="text-destructive">
+                Remove from workspace
+              </DropdownMenuItem>
             </>
           ) : null}
           {!canChangeRole && !canRemove && !isCurrentUser && (
@@ -136,7 +159,10 @@ export function MemberActions({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleRemove} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+            <AlertDialogAction
+              onClick={handleRemove}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
               {isCurrentUser ? "Leave" : "Remove"}
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -154,7 +180,9 @@ export function MemberActions({
           <div className="space-y-2">
             <Label htmlFor="member-role">Role</Label>
             <Select value={newRole} onValueChange={(v) => setNewRole(v as AppRole)}>
-              <SelectTrigger id="member-role"><SelectValue /></SelectTrigger>
+              <SelectTrigger id="member-role">
+                <SelectValue />
+              </SelectTrigger>
               <SelectContent>
                 <SelectItem value="member">Member</SelectItem>
                 <SelectItem value="admin">Admin</SelectItem>
@@ -162,7 +190,9 @@ export function MemberActions({
             </Select>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setRoleOpen(false)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setRoleOpen(false)}>
+              Cancel
+            </Button>
             <Button onClick={handleSaveRole}>Save</Button>
           </DialogFooter>
         </DialogContent>

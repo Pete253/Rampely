@@ -16,12 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useContact } from "../hooks/useContacts";
 import { InlineField } from "./InlineField";
 import { CompanySelector } from "./CompanySelector";
@@ -52,7 +47,10 @@ export function ContactDetail({ id }: { id: string }) {
     return (
       <div className="space-y-3">
         <p className="text-muted-foreground">Contact not found.</p>
-        <Button variant="outline" onClick={() => navigate({ to: "/contacts", search: { search: "" } })}>
+        <Button
+          variant="outline"
+          onClick={() => navigate({ to: "/contacts", search: { search: "" } })}
+        >
           <ArrowLeft className="mr-1 h-4 w-4" /> Back to contacts
         </Button>
       </div>
@@ -74,14 +72,11 @@ export function ContactDetail({ id }: { id: string }) {
   return (
     <div className="space-y-6">
       <Breadcrumbs
-        items={[
-          { label: "Contacts", to: "/contacts" },
-          { label: fullName || "Contact" },
-        ]}
+        items={[{ label: "Contacts", to: "/contacts" }, { label: fullName || "Contact" }]}
       />
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1">
-          <h1 className="text-2xl font-semibold tracking-tight">{fullName}</h1>
+          <h1 className="text-2xl font-extrabold tracking-[-0.03em]">{fullName}</h1>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             {contact.title && <span>{contact.title}</span>}
             {contact.title && contact.company && <span>·</span>}
@@ -159,22 +154,14 @@ export function ContactDetail({ id }: { id: string }) {
             value={contact.last_name}
             onSave={(v) => update({ last_name: v })}
           />
-          <InlineField
-            label="Title"
-            value={contact.title}
-            onSave={(v) => update({ title: v })}
-          />
+          <InlineField label="Title" value={contact.title} onSave={(v) => update({ title: v })} />
           <InlineField
             label="Email"
             type="email"
             value={contact.email}
             onSave={(v) => update({ email: v })}
           />
-          <InlineField
-            label="Phone"
-            value={contact.phone}
-            onSave={(v) => update({ phone: v })}
-          />
+          <InlineField label="Phone" value={contact.phone} onSave={(v) => update({ phone: v })} />
           <div className="space-y-1">
             <div className="text-xs font-medium text-muted-foreground">Company</div>
             <CompanySelector
@@ -198,10 +185,7 @@ export function ContactDetail({ id }: { id: string }) {
               <Row label="Email" value={contact.email ?? "—"} />
               <Row label="Phone" value={contact.phone ?? "—"} />
               <Row label="Company" value={contact.company?.name ?? "—"} />
-              <Row
-                label="Created"
-                value={new Date(contact.created_at).toLocaleDateString()}
-              />
+              <Row label="Created" value={new Date(contact.created_at).toLocaleDateString()} />
             </div>
           </TabsContent>
           <TabsContent value="deals">

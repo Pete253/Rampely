@@ -56,7 +56,13 @@ export function DealVelocityChart({ from, to }: Props) {
               />
               <YAxis
                 tick={{ fontSize: chartTheme.fontSize, fill: chartTheme.axis }}
-                label={{ value: "Avg days", angle: -90, position: "insideLeft", fontSize: 11, fill: chartTheme.axis }}
+                label={{
+                  value: "Avg days",
+                  angle: -90,
+                  position: "insideLeft",
+                  fontSize: 11,
+                  fill: chartTheme.axis,
+                }}
               />
               <Tooltip
                 contentStyle={tooltipStyle}

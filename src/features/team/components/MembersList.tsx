@@ -5,7 +5,14 @@ import { useWorkspace } from "@/shared/hooks/useWorkspace";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useWorkspaceMembers } from "../hooks/useWorkspaceMembers";
 import { MemberActions } from "./MemberActions";
 import { TransferOwnershipDialog } from "./TransferOwnershipDialog";
@@ -13,23 +20,34 @@ import type { AppRole } from "@/shared/lib/types";
 
 function roleBadge(role: AppRole) {
   if (role === "owner") {
-    return <Badge className="bg-amber-500/15 text-amber-700 hover:bg-amber-500/15 border-amber-500/30 dark:text-amber-400">Owner</Badge>;
+    return <Badge className="border-warning/30 bg-warning/15 text-warning">Owner</Badge>;
   }
   if (role === "admin") {
-    return <Badge className="bg-blue-500/15 text-blue-700 hover:bg-blue-500/15 border-blue-500/30 dark:text-blue-400">Admin</Badge>;
+    return <Badge className="border-primary/30 bg-primary/15 text-primary-light">Admin</Badge>;
   }
   return <Badge variant="secondary">Member</Badge>;
 }
 
 function initials(name: string | null | undefined, email: string | null | undefined) {
   const src = name?.trim() || email?.trim() || "?";
-  return src.split(/\s+/).map((p) => p[0]).slice(0, 2).join("").toUpperCase();
+  return src
+    .split(/\s+/)
+    .map((p) => p[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 }
 
 export function MembersList() {
   const { workspace, role, refresh } = useWorkspace();
   const { user } = useAuth();
-  const { members, loading, updateRole, removeMember, refresh: refreshMembers } = useWorkspaceMembers();
+  const {
+    members,
+    loading,
+    updateRole,
+    removeMember,
+    refresh: refreshMembers,
+  } = useWorkspaceMembers();
   const [transferOpen, setTransferOpen] = useState(false);
 
   if (!workspace) return null;
@@ -56,9 +74,7 @@ export function MembersList() {
   const callerRole: AppRole = role ?? "member";
   const isOwner = callerRole === "owner";
 
-  const transferCandidates = members.filter(
-    (m) => m.user_id !== user?.id && m.role !== "owner",
-  );
+  const transferCandidates = members.filter((m) => m.user_id !== user?.id && m.role !== "owner");
 
   return (
     <>
@@ -87,9 +103,14 @@ export function MembersList() {
                       </Avatar>
                       <div className="min-w-0">
                         <div className="truncate text-sm font-medium">
-                          {m.profile?.full_name ?? "Unknown"}{isMe && <span className="ml-1 text-xs text-muted-foreground">(you)</span>}
+                          {m.profile?.full_name ?? "Unknown"}
+                          {isMe && (
+                            <span className="ml-1 text-xs text-muted-foreground">(you)</span>
+                          )}
                         </div>
-                        <div className="truncate text-xs text-muted-foreground">{m.profile?.email}</div>
+                        <div className="truncate text-xs text-muted-foreground">
+                          {m.profile?.email}
+                        </div>
                       </div>
                     </div>
                   </TableCell>

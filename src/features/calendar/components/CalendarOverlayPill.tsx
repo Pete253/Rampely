@@ -9,20 +9,15 @@ interface Props {
   className?: string;
 }
 
-export function CalendarOverlayPill({
-  item,
-  onClick,
-  showSecondary = false,
-  className,
-}: Props) {
+export function CalendarOverlayPill({ item, onClick, showSecondary = false, className }: Props) {
   const Icon = item.kind === "task" ? CheckSquare : Briefcase;
 
   const tone =
     item.kind === "task"
       ? item.overdue
-        ? "bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/40"
-        : "bg-orange-500/15 text-orange-700 dark:text-orange-400 border-orange-500/40"
-      : "bg-purple-500/15 text-purple-700 dark:text-purple-400 border-purple-500/40";
+        ? "bg-danger/15 text-danger border-danger/40"
+        : "bg-warning/15 text-warning border-warning/40"
+      : "bg-blue-5/15 text-blue-5 border-blue-5/40";
 
   return (
     <button
@@ -48,9 +43,7 @@ export function CalendarOverlayPill({
       <Icon className="h-3 w-3 shrink-0" />
       <span className="truncate">{item.title}</span>
       {showSecondary && item.secondary && (
-        <span className="ml-auto shrink-0 text-[10px] opacity-80">
-          {item.secondary}
-        </span>
+        <span className="ml-auto shrink-0 text-[10px] opacity-80">{item.secondary}</span>
       )}
     </button>
   );

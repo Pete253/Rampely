@@ -63,27 +63,14 @@ export function DealDetail({ dealId }: Props) {
 
   return (
     <div className="space-y-4">
-      <Breadcrumbs
-        items={[
-          { label: "Pipeline", to: "/pipeline" },
-          { label: deal.title },
-        ]}
-      />
-      <DealDetailHeader
-        deal={deal}
-        onUpdate={update}
-        onRemove={remove}
-        onChanged={refresh}
-      />
+      <Breadcrumbs items={[{ label: "Pipeline", to: "/pipeline" }, { label: deal.title }]} />
+      <DealDetailHeader deal={deal} onUpdate={update} onRemove={remove} onChanged={refresh} />
 
       <DealMetricsBar deal={deal} daysInStage={daysInStage} />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[320px_1fr]">
         <div className="space-y-4">
-          <DealCompanyCard
-            deal={deal}
-            onUpdate={(patch) => update(patch)}
-          />
+          <DealCompanyCard deal={deal} onUpdate={(patch) => update(patch)} />
           <DealContactsCard
             deal={deal}
             onAdd={addContact}
@@ -135,7 +122,12 @@ function DealNotFound() {
         This deal may have been deleted or you don't have access.
       </p>
       <Button asChild>
-        <Link to="/pipeline" search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}>Back to Pipeline</Link>
+        <Link
+          to="/pipeline"
+          search={{ pipelineId: "", owner: [], minValue: undefined, maxValue: undefined }}
+        >
+          Back to Pipeline
+        </Link>
       </Button>
     </div>
   );

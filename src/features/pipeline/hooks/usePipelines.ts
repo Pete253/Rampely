@@ -165,10 +165,7 @@ export function usePipelineStages(pipelineId: string | undefined) {
 
   const updateStage = useCallback(
     async (id: string, patch: Partial<PipelineStage>) => {
-      const { error } = await supabase
-        .from("pipeline_stages")
-        .update(patch)
-        .eq("id", id);
+      const { error } = await supabase.from("pipeline_stages").update(patch).eq("id", id);
       if (error) throw error;
       await refresh();
     },
@@ -193,25 +190,22 @@ export function usePipelineStages(pipelineId: string | undefined) {
     [refresh],
   );
 
-  const reorderStages = useCallback(
-    async (orderedIds: string[]) => {
-      // Optimistic local
-      setStages((prev) => {
-        const map = new Map(prev.map((s) => [s.id, s]));
-        return orderedIds
-          .map((id, i) => {
-            const s = map.get(id);
-            return s ? { ...s, sort_order: i } : null;
-          })
-          .filter((s): s is PipelineStage => !!s);
-      });
-      // Persist sequentially (small N)
-      for (let i = 0; i < orderedIds.length; i++) {
-        await supabase.from("pipeline_stages").update({ sort_order: i }).eq("id", orderedIds[i]);
-      }
-    },
-    [],
-  );
+  const reorderStages = useCallback(async (orderedIds: string[]) => {
+    // Optimistic local
+    setStages((prev) => {
+      const map = new Map(prev.map((s) => [s.id, s]));
+      return orderedIds
+        .map((id, i) => {
+          const s = map.get(id);
+          return s ? { ...s, sort_order: i } : null;
+        })
+        .filter((s): s is PipelineStage => !!s);
+    });
+    // Persist sequentially (small N)
+    for (let i = 0; i < orderedIds.length; i++) {
+      await supabase.from("pipeline_stages").update({ sort_order: i }).eq("id", orderedIds[i]);
+    }
+  }, []);
 
   return { stages, loading, refresh, createStage, updateStage, deleteStage, reorderStages };
 }

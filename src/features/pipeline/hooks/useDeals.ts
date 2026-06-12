@@ -49,9 +49,7 @@ const PROFILE_CACHE = new Map<string, DealOwner>();
 async function hydrateOwners(rows: DealWithRelations[]): Promise<DealWithRelations[]> {
   const missing = Array.from(
     new Set(
-      rows
-        .map((r) => r.owner_id)
-        .filter((id): id is string => !!id && !PROFILE_CACHE.has(id)),
+      rows.map((r) => r.owner_id).filter((id): id is string => !!id && !PROFILE_CACHE.has(id)),
     ),
   );
   if (missing.length > 0) {
@@ -78,9 +76,7 @@ export function useDeals({ pipelineId, companyId, contactId }: UseDealsArgs) {
     setLoading(true);
     let q = supabase
       .from("deals")
-      .select(
-        "*, company:companies(id,name), contact:contacts(id,first_name,last_name)",
-      )
+      .select("*, company:companies(id,name), contact:contacts(id,first_name,last_name)")
       .eq("workspace_id", workspace.id)
       .order("sort_order", { ascending: true });
 

@@ -69,7 +69,9 @@ export function CsvImportDialog({ entity, open, onOpenChange, onImported }: Prop
   const [mapping, setMapping] = useState<Record<string, FieldKey | null>>({});
   const [enrich, setEnrich] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [enrichProgress, setEnrichProgress] = useState<{ done: number; total: number } | null>(null);
+  const [enrichProgress, setEnrichProgress] = useState<{ done: number; total: number } | null>(
+    null,
+  );
   const [importing, setImporting] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -215,9 +217,7 @@ export function CsvImportDialog({ entity, open, onOpenChange, onImported }: Prop
     toast.success(`Imported ${inserted}, skipped ${skipCount}${extra}`);
 
     if (entity === "companies" && enrich && cvrEnabled) {
-      const targets = insertedCompanies.filter(
-        (c) => c.cvr && /^\d{8}$/.test(c.cvr),
-      );
+      const targets = insertedCompanies.filter((c) => c.cvr && /^\d{8}$/.test(c.cvr));
       if (targets.length > 0) {
         setEnrichProgress({ done: 0, total: targets.length });
         for (let i = 0; i < targets.length; i++) {
@@ -382,10 +382,7 @@ export function CsvImportDialog({ entity, open, onOpenChange, onImported }: Prop
                   {mappedRows.slice(0, 5).map((r, i) => {
                     const skip = r.missing.length > 0;
                     return (
-                      <TableRow
-                        key={i}
-                        className={skip ? "bg-yellow-100/50 dark:bg-yellow-900/20" : ""}
-                      >
+                      <TableRow key={i} className={skip ? "bg-warning/10" : ""}>
                         {fields
                           .filter((f) => mappedKeys.has(f.key))
                           .map((f) => (
@@ -402,7 +399,8 @@ export function CsvImportDialog({ entity, open, onOpenChange, onImported }: Prop
               </Table>
             </div>
             <p className="text-sm text-muted-foreground">
-              Importing {validCount} records, skipping {skipCount} rows with missing required fields.
+              Importing {validCount} records, skipping {skipCount} rows with missing required
+              fields.
             </p>
             {entity === "companies" && cvrEnabled && mappedKeys.has("cvr") && (
               <div className="flex items-center gap-2">
@@ -439,9 +437,7 @@ export function CsvImportDialog({ entity, open, onOpenChange, onImported }: Prop
                 <p className="text-sm text-muted-foreground">
                   Enriching {enrichProgress.done}/{enrichProgress.total} from CVR…
                 </p>
-                <Progress
-                  value={Math.round((enrichProgress.done / enrichProgress.total) * 100)}
-                />
+                <Progress value={Math.round((enrichProgress.done / enrichProgress.total) * 100)} />
               </div>
             )}
           </div>

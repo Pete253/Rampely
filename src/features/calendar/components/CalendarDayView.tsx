@@ -44,15 +44,7 @@ function eventBlockStyle(ev: CalendarEvent): React.CSSProperties {
   return { top: `${top}px`, height: `${height}px` };
 }
 
-function DroppableSlot({
-  day,
-  hour,
-  onClick,
-}: {
-  day: Date;
-  hour: number;
-  onClick: () => void;
-}) {
+function DroppableSlot({ day, hour, onClick }: { day: Date; hour: number; onClick: () => void }) {
   const id = `slot:${format(day, "yyyy-MM-dd")}:${hour}`;
   const { setNodeRef, isOver } = useDroppable({ id, data: { day: day.toISOString(), hour } });
   return (
@@ -83,8 +75,7 @@ export function CalendarDayView({
 }: Props) {
   const dayEvents = events.filter((e) => isSameLocalDay(e.start_at, anchor));
   const dayOverlays = useMemo(
-    () =>
-      [...dealItems, ...taskItems].filter((it) => isSameLocalDay(it.date, anchor)),
+    () => [...dealItems, ...taskItems].filter((it) => isSameLocalDay(it.date, anchor)),
     [dealItems, taskItems, anchor],
   );
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
@@ -140,10 +131,7 @@ export function CalendarDayView({
             </div>
           </div>
         )}
-        <div
-          className="grid grid-cols-[60px_1fr] overflow-y-auto"
-          style={{ maxHeight: 640 }}
-        >
+        <div className="grid grid-cols-[60px_1fr] overflow-y-auto" style={{ maxHeight: 640 }}>
           <div className="relative border-r" style={{ height: 24 * HOUR_HEIGHT }}>
             {DAY_HOURS.map((h) => (
               <div
