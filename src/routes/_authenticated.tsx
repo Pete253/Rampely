@@ -9,6 +9,8 @@ import { ShortcutsHelpProvider, useKeyboardShortcuts } from "@/shared/hooks/useK
 import { KeyboardShortcutsHelp } from "@/shared/components/KeyboardShortcutsHelp";
 import { CountryOnboardingDialog } from "@/shared/components/onboarding/CountryOnboardingDialog";
 import { useWorkspace } from "@/shared/hooks/useWorkspace";
+import { DialerProvider } from "@/features/dialer/hooks/useDialer";
+import { DialerPanel } from "@/features/dialer/components/DialerPanel";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
@@ -87,13 +89,16 @@ function AuthenticatedLayout() {
     <PendingCreateProvider>
       <CommandPaletteProvider>
         <ShortcutsHelpProvider>
-          <ShortcutsBinder />
-          <AppLayout>
-            <Outlet />
-          </AppLayout>
-          <CommandPalette />
-          <KeyboardShortcutsHelp />
-          <OnboardingGate />
+          <DialerProvider>
+            <ShortcutsBinder />
+            <AppLayout>
+              <Outlet />
+            </AppLayout>
+            <CommandPalette />
+            <KeyboardShortcutsHelp />
+            <OnboardingGate />
+            <DialerPanel />
+          </DialerProvider>
         </ShortcutsHelpProvider>
       </CommandPaletteProvider>
     </PendingCreateProvider>

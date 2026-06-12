@@ -20,6 +20,7 @@ export interface DealContactRow {
     last_name: string | null;
     title: string | null;
     email: string | null;
+    phone?: string | null;
     avatar_url?: string | null;
   } | null;
 }
@@ -81,7 +82,7 @@ export function useDeal(dealId: string | undefined) {
     const { data: dc } = await supabase
       .from("deal_contacts" as never)
       .select(
-        "id, contact_id, is_primary, role, contact:contacts(id, first_name, last_name, title, email)",
+        "id, contact_id, is_primary, role, contact:contacts(id, first_name, last_name, title, email, phone)",
       )
       .eq("deal_id", dealId)
       .order("is_primary", { ascending: false });

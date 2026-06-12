@@ -19,6 +19,7 @@ import {
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useContact } from "../hooks/useContacts";
 import { InlineField } from "./InlineField";
+import { CallButton } from "@/features/dialer/components/CallButton";
 import { CompanySelector } from "./CompanySelector";
 import { ContactForm } from "./ContactForm";
 import { ActivityTimeline } from "@/shared/components/activity/ActivityTimeline";
@@ -162,7 +163,16 @@ export function ContactDetail({ id }: { id: string }) {
             value={contact.email}
             onSave={(v) => update({ email: v })}
           />
-          <InlineField label="Phone" value={contact.phone} onSave={(v) => update({ phone: v })} />
+          <div className="flex items-end gap-1">
+            <div className="min-w-0 flex-1">
+              <InlineField
+                label="Phone"
+                value={contact.phone}
+                onSave={(v) => update({ phone: v })}
+              />
+            </div>
+            <CallButton phone={contact.phone} contactName={fullName} contactId={contact.id} />
+          </div>
           <div className="space-y-1">
             <div className="text-xs font-medium text-muted-foreground">Company</div>
             <CompanySelector

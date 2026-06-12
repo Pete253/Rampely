@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { ContactSelector } from "./ContactSelector";
+import { CallButton } from "@/features/dialer/components/CallButton";
 import type { DealDetailData } from "../hooks/useDeal";
 
 interface Props {
@@ -91,6 +92,12 @@ export function DealContactsCard({ deal, onAdd, onRemove, onSetPrimary }: Props)
                     )}
                   </div>
                   <div className="flex items-center gap-0.5">
+                    <CallButton
+                      phone={dc.contact.phone}
+                      contactName={`${dc.contact.first_name} ${dc.contact.last_name ?? ""}`.trim()}
+                      contactId={dc.contact.id}
+                      dealId={deal.id}
+                    />
                     <Button
                       variant="ghost"
                       size="icon"

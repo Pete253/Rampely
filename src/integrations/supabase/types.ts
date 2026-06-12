@@ -273,6 +273,101 @@ export type Database = {
           },
         ];
       };
+      calls: {
+        Row: {
+          activity_id: string | null;
+          contact_id: string | null;
+          created_at: string;
+          deal_id: string | null;
+          direction: Database["public"]["Enums"]["call_direction"];
+          duration: number | null;
+          from_number: string | null;
+          id: string;
+          notes: string | null;
+          outcome: string | null;
+          recording_url: string | null;
+          source: string;
+          status: string;
+          to_number: string;
+          transcript: string | null;
+          twilio_call_sid: string | null;
+          updated_at: string;
+          user_id: string;
+          workspace_id: string;
+        };
+        Insert: {
+          activity_id?: string | null;
+          contact_id?: string | null;
+          created_at?: string;
+          deal_id?: string | null;
+          direction?: Database["public"]["Enums"]["call_direction"];
+          duration?: number | null;
+          from_number?: string | null;
+          id?: string;
+          notes?: string | null;
+          outcome?: string | null;
+          recording_url?: string | null;
+          source?: string;
+          status?: string;
+          to_number: string;
+          transcript?: string | null;
+          twilio_call_sid?: string | null;
+          updated_at?: string;
+          user_id: string;
+          workspace_id: string;
+        };
+        Update: {
+          activity_id?: string | null;
+          contact_id?: string | null;
+          created_at?: string;
+          deal_id?: string | null;
+          direction?: Database["public"]["Enums"]["call_direction"];
+          duration?: number | null;
+          from_number?: string | null;
+          id?: string;
+          notes?: string | null;
+          outcome?: string | null;
+          recording_url?: string | null;
+          source?: string;
+          status?: string;
+          to_number?: string;
+          transcript?: string | null;
+          twilio_call_sid?: string | null;
+          updated_at?: string;
+          user_id?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "calls_activity_id_fkey";
+            columns: ["activity_id"];
+            isOneToOne: false;
+            referencedRelation: "activities";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "calls_contact_id_fkey";
+            columns: ["contact_id"];
+            isOneToOne: false;
+            referencedRelation: "contacts";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "calls_deal_id_fkey";
+            columns: ["deal_id"];
+            isOneToOne: false;
+            referencedRelation: "deals";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "calls_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: false;
+            referencedRelation: "workspaces";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       comp_models: {
         Row: {
           base_salary: number;
@@ -972,6 +1067,7 @@ export type Database = {
       activity_type: "call" | "email" | "meeting" | "note" | "task";
       app_role: "owner" | "admin" | "member";
       booking_outcome: "held" | "no_show" | "cancelled";
+      call_direction: "outbound" | "inbound";
       deal_status: "open" | "won" | "lost";
       event_type: "meeting" | "call" | "other";
       stage_type: "open" | "won" | "lost";
@@ -1105,6 +1201,7 @@ export const Constants = {
       activity_type: ["call", "email", "meeting", "note", "task"],
       app_role: ["owner", "admin", "member"],
       booking_outcome: ["held", "no_show", "cancelled"],
+      call_direction: ["outbound", "inbound"],
       deal_status: ["open", "won", "lost"],
       event_type: ["meeting", "call", "other"],
       stage_type: ["open", "won", "lost"],

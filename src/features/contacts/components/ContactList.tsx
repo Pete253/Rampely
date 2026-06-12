@@ -34,6 +34,7 @@ import { EmptyState } from "@/shared/components/EmptyState";
 import { useContacts, type ContactWithCompany } from "../hooks/useContacts";
 import { ContactForm } from "./ContactForm";
 import { CsvImportDialog } from "./CsvImportDialog";
+import { CallButton } from "@/features/dialer/components/CallButton";
 import { usePendingCreate } from "@/shared/contexts/PendingCreateContext";
 
 interface Props {
@@ -175,7 +176,16 @@ export function ContactList({ initialSearch = "" }: Props = {}) {
                     )}
                   </TableCell>
                   <TableCell>{c.email ?? "—"}</TableCell>
-                  <TableCell>{c.phone ?? "—"}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      <span>{c.phone ?? "—"}</span>
+                      <CallButton
+                        phone={c.phone}
+                        contactName={`${c.first_name} ${c.last_name ?? ""}`.trim()}
+                        contactId={c.id}
+                      />
+                    </div>
+                  </TableCell>
                   <TableCell>{new Date(c.created_at).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
