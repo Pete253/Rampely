@@ -78,11 +78,16 @@ Deno.serve(async (req) => {
   const sids = [params["ParentCallSid"], params["CallSid"]].filter((s): s is string => !!s);
   if (sids.length === 0) return new Response("OK");
 
-  let row: { id: string; status: string } | null = null;
+  let row: {
+    id: string;
+    status: string;
+    answered_at: string | null;
+    transcript_status: string;
+  } | null = null;
   for (const sid of sids) {
     const { data } = await supabase
       .from("calls")
-      .select("id, status")
+      .select("id, status, answered_at, transcript_status")
       .eq("twilio_call_sid", sid)
       .maybeSingle();
     if (data) {
@@ -98,8 +103,17 @@ Deno.serve(async (req) => {
 
   const patch: Record<string, unknown> = {};
 
+  // Kick off Phase 2b transcription + scoring when a recording lands. The
+  // call-intelligence function re-checks every gate (duration, cost cap), so
+  // firing optimistically is safe; "Score now" in the app is the fallback.
+  let fireIntelligence = false;
+  const recordingSeconds = Number(params["RecordingDuration"]);
   if (params["RecordingUrl"]) {
     patch.recording_url = params["RecordingUrl"];
+    if (row.transcript_status === "none") {
+      patch.transcript_status = "pending";
+      fireIntelligence = true;
+    }
   }
 
   const status = params["CallStatus"];
@@ -108,6 +122,10 @@ Deno.serve(async (req) => {
     if (STATUS_RANK[status] >= currentRank) {
       patch.status = status;
     }
+  }
+  // Ring time (Layer 1 metadata): first transition into in-progress.
+  if (status === "in-progress" && !row.answered_at) {
+    patch.answered_at = new Date().toISOString();
   }
 
   const duration = Number(params["CallDuration"]);
@@ -121,6 +139,28 @@ Deno.serve(async (req) => {
       console.error("twilio-status: update failed", error);
       return new Response("Update failed", { status: 500 });
     }
+  }
+
+  if (fireIntelligence) {
+    const invocation = fetch(`${Deno.env.get("SUPABASE_URL")}/functions/v1/call-intelligence`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        callId: row.id,
+        durationHint: Number.isFinite(recordingSeconds) ? recordingSeconds : 0,
+      }),
+    })
+      .then(async (r) => {
+        if (!r.ok) console.error("call-intelligence invoke failed", r.status, await r.text());
+      })
+      .catch((e) => console.error("call-intelligence invoke error", e));
+    // Respond to Twilio immediately; the runtime keeps processing alive.
+    const runtime = (globalThis as { EdgeRuntime?: { waitUntil?: (p: Promise<unknown>) => void } })
+      .EdgeRuntime;
+    runtime?.waitUntil?.(invocation);
   }
 
   return new Response("OK");

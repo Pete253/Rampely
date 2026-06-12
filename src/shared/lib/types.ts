@@ -14,6 +14,8 @@ export type Deal = Tables<"deals">;
 export type Activity = Tables<"activities">;
 export type Booking = Tables<"bookings">;
 export type CompModel = Tables<"comp_models">;
+export type Call = Tables<"calls">;
+export type CallScore = Tables<"call_scores">;
 
 export type AppRole = Database["public"]["Enums"]["app_role"];
 export type BookingOutcome = Database["public"]["Enums"]["booking_outcome"];

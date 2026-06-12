@@ -85,10 +85,34 @@ Once all 6 secrets are set and migrations applied:
 
 ---
 
+## Phase 2b — Transcription + AI call scoring (2 more secrets)
+
+The scoring pipeline is built and fires automatically when a recording lands.
+It needs two AI provider keys in **Supabase → Edge Functions → Secrets**:
+
+| Secret name         | Where to get it                                                  |
+|---------------------|------------------------------------------------------------------|
+| `OPENAI_API_KEY`    | [platform.openai.com](https://platform.openai.com) → API keys (Whisper transcription) |
+| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) → API keys (Claude call scoring) |
+
+Both accounts need billing enabled. Expected cost is roughly **0.3 DKK per
+scored call** (5-min call: Whisper ≈ 0.25 DKK + Claude Haiku ≈ 0.05 DKK), and the
+workspace cost cap (Settings → AI usage, default 1 DKK/call average) pauses the
+pipeline automatically if it's ever exceeded.
+
+Important: scoring only happens on calls where **recording was turned on** in
+the dialer panel — no recording, no transcript. Calls must also be connected
+for more than 2 minutes.
+
+Also apply the new migration `20260612180000_call_intelligence.sql` (Lovable
+sync handles this the same way as the others).
+
+---
+
 ## What's queued for later (no action needed from you yet)
 
 - **Stripe / billing** — Phase 1.7, needed before you can monetise seats
-- **Transcription + AI call scoring** — Phase 2b, needs live calls flowing first
 - **SMS + Email sync** — Phase 2c
 - **Gamification** (XP, streaks) — Phase 3b
+- **AI reflection engine** — Phase 3c (weekly coaching summaries, builds on 2b)
 - **Manager dashboard + onboarding** — Phase 4

@@ -23,6 +23,7 @@ import { Route as AuthenticatedEarningsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedContactsRouteImport } from './routes/_authenticated/contacts'
 import { Route as AuthenticatedCompaniesRouteImport } from './routes/_authenticated/companies'
+import { Route as AuthenticatedCallsRouteImport } from './routes/_authenticated/calls'
 import { Route as AuthenticatedCalendarRouteImport } from './routes/_authenticated/calendar'
 import { Route as AuthenticatedBookingsRouteImport } from './routes/_authenticated/bookings'
 import { Route as AuthenticatedContactsIndexRouteImport } from './routes/_authenticated/contacts.index'
@@ -101,6 +102,11 @@ const AuthenticatedCompaniesRoute = AuthenticatedCompaniesRouteImport.update({
   path: '/companies',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedCallsRoute = AuthenticatedCallsRouteImport.update({
+  id: '/calls',
+  path: '/calls',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedCalendarRoute = AuthenticatedCalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
@@ -152,6 +158,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/bookings': typeof AuthenticatedBookingsRoute
   '/calendar': typeof AuthenticatedCalendarRoute
+  '/calls': typeof AuthenticatedCallsRoute
   '/companies': typeof AuthenticatedCompaniesRouteWithChildren
   '/contacts': typeof AuthenticatedContactsRouteWithChildren
   '/dashboard': typeof AuthenticatedDashboardRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/bookings': typeof AuthenticatedBookingsRoute
   '/calendar': typeof AuthenticatedCalendarRoute
+  '/calls': typeof AuthenticatedCallsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/earnings': typeof AuthenticatedEarningsRoute
   '/pipeline': typeof AuthenticatedPipelineRouteWithChildren
@@ -198,6 +206,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/_authenticated/bookings': typeof AuthenticatedBookingsRoute
   '/_authenticated/calendar': typeof AuthenticatedCalendarRoute
+  '/_authenticated/calls': typeof AuthenticatedCallsRoute
   '/_authenticated/companies': typeof AuthenticatedCompaniesRouteWithChildren
   '/_authenticated/contacts': typeof AuthenticatedContactsRouteWithChildren
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
@@ -223,6 +232,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/bookings'
     | '/calendar'
+    | '/calls'
     | '/companies'
     | '/contacts'
     | '/dashboard'
@@ -246,6 +256,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/bookings'
     | '/calendar'
+    | '/calls'
     | '/dashboard'
     | '/earnings'
     | '/pipeline'
@@ -268,6 +279,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/_authenticated/bookings'
     | '/_authenticated/calendar'
+    | '/_authenticated/calls'
     | '/_authenticated/companies'
     | '/_authenticated/contacts'
     | '/_authenticated/dashboard'
@@ -394,6 +406,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCompaniesRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/calls': {
+      id: '/_authenticated/calls'
+      path: '/calls'
+      fullPath: '/calls'
+      preLoaderRoute: typeof AuthenticatedCallsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/calendar': {
       id: '/_authenticated/calendar'
       path: '/calendar'
@@ -500,6 +519,7 @@ const AuthenticatedPipelineRouteWithChildren =
 interface AuthenticatedRouteChildren {
   AuthenticatedBookingsRoute: typeof AuthenticatedBookingsRoute
   AuthenticatedCalendarRoute: typeof AuthenticatedCalendarRoute
+  AuthenticatedCallsRoute: typeof AuthenticatedCallsRoute
   AuthenticatedCompaniesRoute: typeof AuthenticatedCompaniesRouteWithChildren
   AuthenticatedContactsRoute: typeof AuthenticatedContactsRouteWithChildren
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
@@ -515,6 +535,7 @@ interface AuthenticatedRouteChildren {
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedBookingsRoute: AuthenticatedBookingsRoute,
   AuthenticatedCalendarRoute: AuthenticatedCalendarRoute,
+  AuthenticatedCallsRoute: AuthenticatedCallsRoute,
   AuthenticatedCompaniesRoute: AuthenticatedCompaniesRouteWithChildren,
   AuthenticatedContactsRoute: AuthenticatedContactsRouteWithChildren,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,

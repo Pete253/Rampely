@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.twilio-status]
 verify_jwt = false
+
+[functions.call-intelligence]
+verify_jwt = true

@@ -11,6 +11,7 @@ import { CountrySelect } from "@/shared/components/onboarding/CountrySelect";
 import type { CountryCode } from "@/shared/lib/country-features";
 import { TeamSettings } from "@/features/team/components/TeamSettings";
 import { CompensationSettings } from "@/features/earnings/components/CompensationSettings";
+import { AiUsageSettings } from "@/features/calls/components/AiUsageSettings";
 
 export const Route = createFileRoute("/_authenticated/settings")({
   component: SettingsPage,
@@ -54,6 +55,7 @@ function SettingsPage() {
         <TabsList>
           <TabsTrigger value="team">Team</TabsTrigger>
           {isAdmin && <TabsTrigger value="compensation">Compensation</TabsTrigger>}
+          {isAdmin && <TabsTrigger value="ai-usage">AI usage</TabsTrigger>}
           <TabsTrigger value="country">Country</TabsTrigger>
         </TabsList>
         <TabsContent value="team" className="space-y-6">
@@ -62,6 +64,11 @@ function SettingsPage() {
         {isAdmin && (
           <TabsContent value="compensation">
             <CompensationSettings />
+          </TabsContent>
+        )}
+        {isAdmin && (
+          <TabsContent value="ai-usage">
+            <AiUsageSettings />
           </TabsContent>
         )}
         <TabsContent value="country">

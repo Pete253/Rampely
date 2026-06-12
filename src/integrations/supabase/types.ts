@@ -273,9 +273,70 @@ export type Database = {
           },
         ];
       };
+      call_scores: {
+        Row: {
+          call_id: string;
+          completion_tokens: number | null;
+          cost_dkk: number;
+          created_at: string;
+          id: string;
+          layer: number;
+          model: string | null;
+          parameters: Json;
+          prompt_tokens: number | null;
+          summary: string | null;
+          user_id: string;
+          workspace_id: string;
+        };
+        Insert: {
+          call_id: string;
+          completion_tokens?: number | null;
+          cost_dkk?: number;
+          created_at?: string;
+          id?: string;
+          layer: number;
+          model?: string | null;
+          parameters?: Json;
+          prompt_tokens?: number | null;
+          summary?: string | null;
+          user_id: string;
+          workspace_id: string;
+        };
+        Update: {
+          call_id?: string;
+          completion_tokens?: number | null;
+          cost_dkk?: number;
+          created_at?: string;
+          id?: string;
+          layer?: number;
+          model?: string | null;
+          parameters?: Json;
+          prompt_tokens?: number | null;
+          summary?: string | null;
+          user_id?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "call_scores_call_id_fkey";
+            columns: ["call_id"];
+            isOneToOne: false;
+            referencedRelation: "calls";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "call_scores_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: false;
+            referencedRelation: "workspaces";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       calls: {
         Row: {
           activity_id: string | null;
+          answered_at: string | null;
           contact_id: string | null;
           created_at: string;
           deal_id: string | null;
@@ -290,6 +351,8 @@ export type Database = {
           status: string;
           to_number: string;
           transcript: string | null;
+          transcript_json: Json | null;
+          transcript_status: string;
           twilio_call_sid: string | null;
           updated_at: string;
           user_id: string;
@@ -297,6 +360,7 @@ export type Database = {
         };
         Insert: {
           activity_id?: string | null;
+          answered_at?: string | null;
           contact_id?: string | null;
           created_at?: string;
           deal_id?: string | null;
@@ -311,6 +375,8 @@ export type Database = {
           status?: string;
           to_number: string;
           transcript?: string | null;
+          transcript_json?: Json | null;
+          transcript_status?: string;
           twilio_call_sid?: string | null;
           updated_at?: string;
           user_id: string;
@@ -318,6 +384,7 @@ export type Database = {
         };
         Update: {
           activity_id?: string | null;
+          answered_at?: string | null;
           contact_id?: string | null;
           created_at?: string;
           deal_id?: string | null;
@@ -332,6 +399,8 @@ export type Database = {
           status?: string;
           to_number?: string;
           transcript?: string | null;
+          transcript_json?: Json | null;
+          transcript_status?: string;
           twilio_call_sid?: string | null;
           updated_at?: string;
           user_id?: string;
@@ -907,6 +976,7 @@ export type Database = {
       };
       workspaces: {
         Row: {
+          ai_cost_cap_dkk: number;
           country: string;
           created_at: string;
           id: string;
@@ -914,6 +984,7 @@ export type Database = {
           onboarding_completed: boolean;
         };
         Insert: {
+          ai_cost_cap_dkk?: number;
           country?: string;
           created_at?: string;
           id?: string;
@@ -921,6 +992,7 @@ export type Database = {
           onboarding_completed?: boolean;
         };
         Update: {
+          ai_cost_cap_dkk?: number;
           country?: string;
           created_at?: string;
           id?: string;
