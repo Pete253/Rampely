@@ -273,6 +273,50 @@ export type Database = {
           },
         ];
       };
+      comp_models: {
+        Row: {
+          base_salary: number;
+          bonus_tiers: Json;
+          created_at: string;
+          id: string;
+          per_booking_rate: number;
+          updated_at: string;
+          user_id: string | null;
+          valid_from: string;
+          workspace_id: string;
+        };
+        Insert: {
+          base_salary?: number;
+          bonus_tiers?: Json;
+          created_at?: string;
+          id?: string;
+          per_booking_rate?: number;
+          updated_at?: string;
+          user_id?: string | null;
+          valid_from?: string;
+          workspace_id: string;
+        };
+        Update: {
+          base_salary?: number;
+          bonus_tiers?: Json;
+          created_at?: string;
+          id?: string;
+          per_booking_rate?: number;
+          updated_at?: string;
+          user_id?: string | null;
+          valid_from?: string;
+          workspace_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "comp_models_workspace_id_fkey";
+            columns: ["workspace_id"];
+            isOneToOne: false;
+            referencedRelation: "workspaces";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       contacts: {
         Row: {
           company_id: string | null;

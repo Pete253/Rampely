@@ -10,13 +10,15 @@ import { useWorkspace } from "@/shared/hooks/useWorkspace";
 import { CountrySelect } from "@/shared/components/onboarding/CountrySelect";
 import type { CountryCode } from "@/shared/lib/country-features";
 import { TeamSettings } from "@/features/team/components/TeamSettings";
+import { CompensationSettings } from "@/features/earnings/components/CompensationSettings";
 
 export const Route = createFileRoute("/_authenticated/settings")({
   component: SettingsPage,
 });
 
 function SettingsPage() {
-  const { workspace, refresh } = useWorkspace();
+  const { workspace, role, refresh } = useWorkspace();
+  const isAdmin = role === "owner" || role === "admin";
   const [country, setCountry] = useState<CountryCode | undefined>(
     workspace?.country as CountryCode | undefined,
   );
@@ -51,11 +53,17 @@ function SettingsPage() {
       <Tabs defaultValue="team" className="space-y-6">
         <TabsList>
           <TabsTrigger value="team">Team</TabsTrigger>
+          {isAdmin && <TabsTrigger value="compensation">Compensation</TabsTrigger>}
           <TabsTrigger value="country">Country</TabsTrigger>
         </TabsList>
         <TabsContent value="team" className="space-y-6">
           <TeamSettings />
         </TabsContent>
+        {isAdmin && (
+          <TabsContent value="compensation">
+            <CompensationSettings />
+          </TabsContent>
+        )}
         <TabsContent value="country">
           <Card>
             <CardHeader>

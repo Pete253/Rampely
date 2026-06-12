@@ -11,6 +11,7 @@ import {
   CalendarCheck,
   CheckSquare,
   Settings,
+  Wallet,
   type LucideIcon,
 } from "lucide-react";
 import { useState } from "react";
@@ -37,6 +38,7 @@ export const navItems: NavItem[] = [
   { label: "Contacts", to: "/contacts", icon: Users },
   { label: "Pipeline", to: "/pipeline", icon: KanbanSquare },
   { label: "Bookings", to: "/bookings", icon: CalendarCheck },
+  { label: "Earnings", to: "/earnings", icon: Wallet },
   { label: "Calendar", to: "/calendar", icon: Calendar },
   { label: "Tasks", to: "/tasks", icon: CheckSquare },
   { label: "Settings", to: "/settings", icon: Settings },
